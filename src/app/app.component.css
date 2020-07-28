@@ -1,0 +1,66 @@
+.topBar{
+    width:100%;
+    height:50px;
+    background-color:#408cea;
+    position:fixed;
+    top:0px;
+    left:0px;
+    z-index:10;
+}
+
+.topBar .header{
+    position:relative;
+    text-align: center;    
+    height:100%;    
+    line-height: 50px;
+}
+
+.topBar .header .header_item{
+    height:100%;
+    font-size:20px;
+    margin-left:10px;
+    margin-right:10px;
+    cursor: pointer;
+}
+.topBar .header > .header_bar{
+    cursor:context-menu;
+}
+
+.header{
+    color:white;
+}
+.footer{    
+    background-color:#408cea;
+    color:white;      
+    padding:10px;
+    font-size:12px;
+    text-align:center;
+    margin-top:50px;
+}
+.footer span{
+    white-space: pre-wrap;
+}
+
+.footer .table{
+    color:white;
+    margin:0;
+    width:40%;
+    left:50%;
+    position:relative;
+    transform:translateX(-50%);
+}
+
+
+.footer .table tr{
+    height:20px;
+}
+.footer .table tr td{
+    border:0;
+    height:20px;
+    padding:0;
+}
+a:link,
+a:visited{
+    text-decoration: none;
+    color:white;
+}
