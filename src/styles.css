@@ -2,4 +2,39 @@
 html,body{
     font-family: "Do hyeon",sans-serif !important;
     
+}.footer{    
+    background-color:#408cea;
+    color:white;      
+    padding:10px;
+    font-size:12px;
+    text-align:center;
+    margin-top:50px;    
+    bottom:0;    
+}
+.footer span{
+    white-space: pre-wrap;
+}
+
+.footer .table{
+    color:white;
+    margin:0;
+    width:40%;
+    left:50%;
+    position:relative;
+    transform:translateX(-50%);
+}
+
+
+.footer .table tr{
+    height:20px;
+}
+.footer .table tr td{
+    border:0;
+    height:20px;
+    padding:0;
+}
+a:link,
+a:visited{
+    text-decoration: none;
+    color:white;
 }

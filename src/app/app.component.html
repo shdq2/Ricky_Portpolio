@@ -1,17 +1,16 @@
 <div class="topBar">
     <div class="header">
-        <a class="header_item">Main</a>
+        <a class="header_item" [routerLink]="['/main']">Main</a>
         <a class="header_bar">|</a>
-        <a class="header_item">About</a>
+        <a class="header_item" [routerLink]="['/activity']">Acitivity</a>
         <a class="header_bar">|</a>
-        <a class="header_item">Project</a>
+        <a class="header_item" [routerLink]="['/project']">Project</a>
     </div>
 </div>
 <div class="app-wrapper">
   <router-outlet></router-outlet>
 </div>
-
-<div class="footer">
+<div class="footer positionFix">
   <table class="table">
     <tr>
       <td>
@@ -35,4 +34,4 @@
       </td>
     </tr>
   </table>
-</div>
+</div>  

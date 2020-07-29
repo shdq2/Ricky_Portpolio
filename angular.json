@@ -28,7 +28,8 @@
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "font/font.css"
             ],
-            "scripts": []
+            "scripts": [              
+            ]
           },
           "configurations": {
             "production": {
