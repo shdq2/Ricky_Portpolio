@@ -41,6 +41,20 @@
     }
 }
 
+@keyframes fadeInOut{
+    0%{
+        opacity:0;
+    }
+    30%{
+        opacity:1;
+    }
+    60%{
+        opacity:1;
+    }
+    100%{
+        opacity:0;
+    }
+}
 .main_content{
     text-align:center;
     padding-top:20px;
@@ -127,6 +141,30 @@
     float:right;
     padding-right:2rem;    
     padding-left:0;
+}
+
+
+.career >.career_line:nth-child(2n-1)> .career_item img.gotoPortpolio.left {
+    display:none;    
+}
+
+.career >.career_line:nth-child(2n)> .career_item img.gotoPortpolio.right {
+    display:none;
+}
+
+.left{
+    transform:rotate(180deg);
+}
+img.gotoPortpolio{
+    width:20px;
+}
+.gotoPortpolio{
+    display:inline-block;
+}
+
+.portContainer{
+    animation:fadeInOut 2s ease 0s infinite;
+    cursor:pointer;
 }
 .career >.career_line:nth-child(2n-1)> .career_item:before {
     content:'';

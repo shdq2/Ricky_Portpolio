@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import {MainService} from './main.service';
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -12,12 +12,32 @@ export class MainComponent implements OnInit {
   currentTitleIdx = 0;
   TitleText =["Developer","Ricky's Web"];
   currentTitle;
-  constructor() { }
+  userData = {
+    info_name:'',
+    info_nickname:'',
+    info_email:'',
+    info_eng_name:'',
+    info_phone:'',
+    info_git:''
+  };
+  careerData = [];
+  constructor(private mainService:MainService) {    
+    this.getInfo("shdq");    
+   }
 
   ngOnInit(): void {    
     this.writeTitle();
   }
 
+  getInfo(id){
+    this.mainService.getUserInfo(id).subscribe(data=>{
+      this.userData = (data as any).result[0];          
+      
+    })
+    this.mainService.getCareerInfo(id).subscribe(data=>{
+      this.careerData = (data as any).result;                 
+    })
+  }
   writeTitle(){
     var idx = 0;
     var interval = setInterval(()=>{      

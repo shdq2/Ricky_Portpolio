@@ -7,6 +7,7 @@ import { MainComponent } from './main/main.component';
 import { ProjectComponent } from './project/project.component';
 import { AcitivityComponent } from './acitivity/acitivity.component';
 
+import {HttpClientModule} from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,7 +19,8 @@ import { AcitivityComponent } from './acitivity/acitivity.component';
     BrowserModule,
     AppRouterModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

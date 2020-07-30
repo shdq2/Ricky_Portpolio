@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import {ActivityService} from './activity.service';
 @Component({
   selector: 'app-acitivity',
   templateUrl: './acitivity.component.html',
@@ -7,9 +7,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AcitivityComponent implements OnInit {
 
-  constructor() { }
+  constructor(private activityService:ActivityService) {
 
-  ngOnInit(): void {
   }
-
+  activityTitle =[];
+  activityData=[];
+  ngOnInit(): void {
+    this.getActivityTitle("shdq");
+  }
+  getActivityTitle(id){
+    this.activityService.getActivityTitle(id).subscribe(data=>{
+      this.activityTitle = (data as any).result;
+      for(var i = 0 ;i<this.activityTitle.length;i++){
+        this.activityService.getActivity(id,this.activityTitle[i].actitle_id).subscribe(result=>{
+          var d=  (result as any).result;          
+          for(var j = 0 ; j <d.length;j++){
+            this.activityData.push(d[j]);
+          }                    
+        })
+      }      
+    });
+  }
 }

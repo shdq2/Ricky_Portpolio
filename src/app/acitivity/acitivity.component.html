@@ -1,20 +1,25 @@
 <div class="activity_div">
-    <div class="activity_content">
-        <h2 class="activity_title">&lt; Certificate &gt;</h2>
-        <div class="activity_content_item">
-            <h3 class="acitvity_content_item_title">운전 면허</h3>
-            <span class="acitvity_content_item_detail">1종 보통</span>
-            <div class="acitvity_content_item_date">2012.1</div>
-            <div class="acitvity_content_item_publisher">부산지방경찰청</div>
+    <div class="activity_content" *ngFor="let acTitle of activityTitle">
+        <h2 class="activity_title">&lt; {{acTitle.actitle_title}} &gt;</h2>
+        <div *ngFor="let activity of activityData;"> 
+            <div class="activity_content_item"  *ngIf="acTitle.actitle_id == activity.actitle_id">
+                <h3 class="acitvity_content_item_title">{{activity.activity_title}}</h3>
+                <span class="acitvity_content_item_detail">{{activity.activity_detail}}</span>
+                <div class="acitvity_content_item_date">{{activity.activity_date | date:"yyyy.MM"}}</div>
+                <div class="acitvity_content_item_publisher">{{activity.activity_publisher}}</div>
+                <div class="acitvity_content_item_content">{{activity.activity_content}}</div>
+            </div>
         </div>
-        <div class="activity_content_item">
+        
+        <!-- <div class="activity_content_item">
             <h3 class="acitvity_content_item_title">정보처리기사</h3>
             <span class="acitvity_content_item_detail">최종 합격</span>
             <div class="acitvity_content_item_date">2018.5</div>
             <div class="acitvity_content_item_publisher">과학기술정보통신부</div>
-        </div>
+        </div> -->
     </div>
-    <div class="activity_content">
+    
+    <!-- <div class="activity_content">
         <h2 class="activity_title">&lt; Activity &gt;</h2>
         <div class="activity_content_item">
             <h3 class="acitvity_content_item_title">빅데이터 기반 Java를 활용한 데이터베이스 개발자 양성과정</h3>
@@ -23,5 +28,7 @@
             <div class="acitvity_content_item_publisher">한국기술교육직업전문학교</div>
             <div class="acitvity_content_item_content">Spring, Jsp, Tomcat 서버, MySql을 활용하여 어플리케이션 구현 및 배포</div>
         </div>
-    </div>
+    </div> -->
+
+    
 </div>

@@ -8,33 +8,31 @@
 <div class="main_about main_content">
     <h2 class="main_title">&lt; About Me &gt;</h2>
     <img src="./../../assets/img/default.png"/>
-    <div class="main_about_name main_about_info">김상몽</div>
-    <div class="main_about_name_eng main_about_info">Sang-Mong Kim</div>
-    <div class="main_about_name_eng_sub main_about_info">( Ricky Kim )</div>
+    <div class="main_about_name main_about_info">{{userData.info_name}}</div>
+    <div class="main_about_name_eng main_about_info">{{userData.info_eng_name}}</div>
+    <div class="main_about_name_eng_sub main_about_info">( {{userData.info_nickname}} )</div>
     <br />
     <br />
-    <div class="main_about_info" ><img src="https://img.icons8.com/material-outlined/24/000000/new-post.png"/><a href="mailto:dev.mongs@gmail.com">dev.mongs@gmail.com</a></div>
-    <div class="main_about_info"><img src="https://img.icons8.com/material-rounded/24/000000/github.png"/><a href="https://github.com/shdq2">shdq2</a></div>
-    <div class="main_about_info"><img src="https://img.icons8.com/material-rounded/24/000000/smartphone-approve.png"/>010-7544-3593</div>
+    <div class="main_about_info" ><img src="https://img.icons8.com/material-outlined/24/000000/new-post.png"/><a href="mailto:{{userData.info_email}}">{{userData.info_email}}</a></div>
+    <div class="main_about_info"><img src="https://img.icons8.com/material-rounded/24/000000/github.png"/><a href="https://github.com/{{userData.info_git}}">{{userData.info_git}}</a></div>
+    <div class="main_about_info"><img src="https://img.icons8.com/material-rounded/24/000000/smartphone-approve.png"/>{{userData.info_phone}}</div>
 </div>
 <div class="main_career main_content">
     <h2 class="main_title">&lt; Career &gt;</h2>
     <ul class="career">
-        <li class="career_line">
+        
+        <li class="career_line" *ngFor="let career of careerData;let idx = index;">
             <div class="career_item">
-                <h2 class="career_item_title">(주)마케비전 코리아</h2>
-                <p class="career_item_date">2018.06 ~ 2020.04</p>
-                <div class="career_item_content">Front-End Developer ( WebGL )</div>
-            </div>
-            
-        </li>
-        <li class="career_line">
-            <div class="career_item">
-                <h2 class="career_item_title">포트폴리오 제작</h2>
-                <p class="career_item_date">2020.04 ~</p>
-                <div class="career_item_content">Develop Portpolio </div>
-            </div>
-        </li>        
+                <h2 class="career_item_title">{{career.career_company}}</h2>
+                <p class="career_item_date">{{career.career_startDate | date:"yyyy.MM"}} ~ {{career.career_endDate | date:"yyyy.MM"}}</p>
+                <div class="career_item_content">{{career.career_role}}</div>
+                <div class="portContainer">
+                    <img class="gotoPortpolio left" src="https://img.icons8.com/flat_round/64/000000/arrow-right.png"/> 
+                    <div class="gotoPortpolio">포트폴리오 보러가기 </div>
+                    <img class="gotoPortpolio right" src="https://img.icons8.com/flat_round/64/000000/arrow-right.png"/> 
+                </div>
+            </div>            
+        </li>       
     </ul>
 </div>
 

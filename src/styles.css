@@ -2,7 +2,13 @@
 html,body{
     font-family: "Do hyeon",sans-serif !important;
     
-}.footer{    
+}
+
+body{
+    overflow-x:hidden;
+    overflow-y:scroll;
+}
+.footer{    
     background-color:#408cea;
     color:white;      
     padding:10px;
