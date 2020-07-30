@@ -5,6 +5,7 @@ const path = require('path');
 const app = express();
 const user = require('./routers/userRouter');
 const activity = require('./routers/activityRouter');
+const project = require('./routers/projectRouter');
 const cors = require('cors');
 //var cookie = require('cookie-parser');
 
@@ -23,6 +24,7 @@ app.use(express.static(path.join(__dirname,'../dist')));
 
 app.use('/user',user);
 app.use('/activity',activity);
+app.use('/project',project);
 
 const port = process.env.PORT || 3000;
 app.set('port' , port );

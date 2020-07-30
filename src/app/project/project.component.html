@@ -1,6 +1,16 @@
-<div class="project_div">
-    <div class="project_type">
-        <h2 class="project_type_title">&lt; Team Project &gt; </h2>
-        
+ <div class="project_div"  *ngIf="projectList.length > 0">    
+    <h2 class="project_type_title">&lt; Project with the '{{projectList[0].career_company}}' &gt; </h2>        
+    <div class="project_item_div">
+        <div class="project_item_list col-md-4 col-xs-12">
+            <div class="project_item  col-xs-12" *ngFor="let project of projectList;let idx = index;">
+                <h3 class="project_title">{{project.project_name}}</h3>
+                <div class="project_date">{{project.project_startDate | date:"yyyy-MM"}} ~ {{project.project_endDate | date:"yyyy-MM"}}</div>
+                <hr />
+            </div>
+        </div>
+        <div class="project_item_view col-md-8 col-xs-12">
+        <img src="" />        
     </div>
-</div>
+    </div>
+</div> 
+

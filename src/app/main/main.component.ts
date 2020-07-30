@@ -36,6 +36,7 @@ export class MainComponent implements OnInit {
     })
     this.mainService.getCareerInfo(id).subscribe(data=>{
       this.careerData = (data as any).result;                 
+      
     })
   }
   writeTitle(){
@@ -55,8 +56,6 @@ export class MainComponent implements OnInit {
         this.deleteTitle();
       },3000);
     }
-      
-      
     },200);
   }
   deleteTitle(){

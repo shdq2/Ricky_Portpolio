@@ -26,7 +26,7 @@
                 <h2 class="career_item_title">{{career.career_company}}</h2>
                 <p class="career_item_date">{{career.career_startDate | date:"yyyy.MM"}} ~ {{career.career_endDate | date:"yyyy.MM"}}</p>
                 <div class="career_item_content">{{career.career_role}}</div>
-                <div class="portContainer">
+                <div class="portContainer" [routerLink]="['/project',career.career_id]">
                     <img class="gotoPortpolio left" src="https://img.icons8.com/flat_round/64/000000/arrow-right.png"/> 
                     <div class="gotoPortpolio">포트폴리오 보러가기 </div>
                     <img class="gotoPortpolio right" src="https://img.icons8.com/flat_round/64/000000/arrow-right.png"/> 
