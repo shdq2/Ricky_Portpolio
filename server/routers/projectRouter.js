@@ -12,7 +12,7 @@ router.get('/list',function(req,res){
     var data = req.query;    
     
     var resultJson = {};    
-    var stmt = 'SELECT project_account,project_startDate,project_endDate,project_name,career_company,project_id,ca.career_id FROM portpolioDB.project as pro join career as ca on ca.career_id = pro.career_id where ca.career_id = \''+data.project_id+'\'';        
+    var stmt = 'SELECT project_explanation,project_account,project_startDate,project_endDate,project_name,career_company,project_id,ca.career_id FROM portpolioDB.project as pro join career as ca on ca.career_id = pro.career_id where ca.career_id = \''+data.project_id+'\'';        
     connection.query(stmt, function (err, result) {
         if(err) {     
             resultJson.id = data.id;       
@@ -24,8 +24,7 @@ router.get('/list',function(req,res){
             //   res.json(result);
         }   
         
-        res.json(resultJson);
-        console.log(resultJson);
+        res.json(resultJson);        
     })
 });
 module.exports = router;

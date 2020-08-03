@@ -112,13 +112,81 @@
 .career{
     padding:0;
 }
-.career > .career_line{
-    list-style-type: none;
-    width:6px;
-    margin:auto;
-    padding:1.5rem 0;
-    background-color:#cadff9;
+@media (min-width:400px){
+    .career > .career_line{
+        list-style-type: none;
+        width:6px;
+        margin:auto;
+        padding:1.5rem 0;
+        background-color:#cadff9;
+    }
+    .career >.career_line:nth-child(2n-1)> .career_item {
+        text-align: left;    
+        float:left;
+        padding-left:2rem;
+    }
+    .career >.career_line:nth-child(2n)> .career_item {
+        text-align: right;
+        float:right;
+        padding-right:2rem;    
+        padding-left:0;
+    }
+    .career >.career_line:nth-child(2n-1)> .career_item:before {
+        content:'';
+        position:absolute;    
+        width:20px;
+        height:20px;
+        left:-7px;
+        border-radius: 50%;
+        background-color:#3b89ea;
+        top:20px;
+    }
+    .career >.career_line:nth-child(2n)> .career_item:after {
+        content:'';
+        position:absolute;    
+        width:20px;
+        height:20px;
+        right:-7px;
+        border-radius: 50%;
+        background-color:#3b89ea;
+        top:20px;
+    }
+    .career >.career_line:nth-child(2n-1)> .career_item img.gotoPortpolio.left {
+        display:none;    
+    }
+    
+    .career >.career_line:nth-child(2n)> .career_item img.gotoPortpolio.right {
+        display:none;
+    }
 }
+@media (max-width : 399px){
+    .career > .career_line{
+        list-style-type: none;
+        width:6px;
+        margin-left:35px;
+        padding:1.5rem 0;
+        background-color:#cadff9;
+    }
+    .career >.career_line .career_item {
+        text-align: left;    
+        float:left;
+        padding-left:2rem;
+    }
+    .career >.career_line .career_item:before {
+        content:'';
+        position:absolute;    
+        width:20px;
+        height:20px;
+        left:-7px;
+        border-radius: 50%;
+        background-color:#3b89ea;
+        top:20px;
+    }
+    .career >.career_line .career_item img.gotoPortpolio.left {
+        display:none;    
+    }    
+}
+
 .career > .career_line:after{
     content:" ";
     display:block;
@@ -131,26 +199,10 @@
     width:300px;
     word-break: keep-all;
 }
-.career >.career_line:nth-child(2n-1)> .career_item {
-    text-align: left;    
-    float:left;
-    padding-left:2rem;
-}
-.career >.career_line:nth-child(2n)> .career_item {
-    text-align: right;
-    float:right;
-    padding-right:2rem;    
-    padding-left:0;
-}
 
 
-.career >.career_line:nth-child(2n-1)> .career_item img.gotoPortpolio.left {
-    display:none;    
-}
 
-.career >.career_line:nth-child(2n)> .career_item img.gotoPortpolio.right {
-    display:none;
-}
+
 
 .left{
     transform:rotate(180deg);
@@ -166,26 +218,7 @@ img.gotoPortpolio{
     animation:fadeInOut 2s ease 0s infinite;
     cursor:pointer;
 }
-.career >.career_line:nth-child(2n-1)> .career_item:before {
-    content:'';
-    position:absolute;    
-    width:20px;
-    height:20px;
-    left:-7px;
-    border-radius: 50%;
-    background-color:#3b89ea;
-    top:20px;
-}
-.career >.career_line:nth-child(2n)> .career_item:after {
-    content:'';
-    position:absolute;    
-    width:20px;
-    height:20px;
-    right:-7px;
-    border-radius: 50%;
-    background-color:#3b89ea;
-    top:20px;
-}
+
 .career > .career_line:nth-child(1){
     background:linear-gradient(180deg,#fff0,#cadff9 15%);
 }

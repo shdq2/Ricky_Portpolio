@@ -1,0 +1,16 @@
+<div class="loginForm" [ngClass]="{select_login:login_type == 1,select_view:login_type == 0}" *ngIf="isChk == true">
+    <form (submit)="login()">
+        <div class="login_type" (click)="change_login_type(0)">
+            User View
+            <div class="selectBar" ></div>
+        </div>      
+        <div class="login_type" (click)="change_login_type(1)">
+            Admin Login
+        </div>      
+        <div class="inputForm">
+            <input type="text" [(ngModel)]="loginForm.id" placeholder="id" class="form-control" [ngModelOptions]="{standalone: true}">
+            <input type="password" [(ngModel)]="loginForm.pw" placeholder="pw" class="form-control" [ngModelOptions]="{standalone: true}" *ngIf="login_type == 1">
+            <input type="submit" value="login" class="form-control" />
+        </div>        
+    </form>
+</div>

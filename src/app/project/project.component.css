@@ -7,9 +7,10 @@
 }
 
 .project_item_list{
-    display:inline-block;
-    position:relative;
-    vertical-align: top;
+    
+    position:relative;    
+    margin-top:25px;
+    width:100%;
 }
 .project_item_div{
     height:100%;
@@ -24,6 +25,7 @@
     width:100%;    
     /* left:50%;
     transform:translateX(-50%); */
+    /* display:inline-block; */
     padding-top:20px;  
           
 }
@@ -33,18 +35,41 @@
     margin-bottom:15px;
     
 }
-
+.project_account{
+    font-size:20px;
+}
 .project_date{
     margin-top:20px;
     color:#46506e7e;
 }
+.project_explanation{
+    font-size:22px;
+    word-break: keep-all;
+    margin-top:15px;
+}
 
-.project_item_view{
-    border:1px solid;
+.close{
+    outline: none;
+}
+.modal.show{
+    width:100% !important;
+    height:100% !important;
+    opacity:1 !important;
+}
+
+#exampleModalLong{
+    width:0%;
+    height:0;
+    display:block;    
+    opacity:0;
+    transition:opacity 0.7s 0s ease;
+}
+
+.modal-body img{
     width:100%;
     height:100%;
-    position: relative;
-    display:inline-block;
-    vertical-align: top;
-    margin-top:20px;
+    max-height:100%;
+    max-width:100%;
 }
+
+

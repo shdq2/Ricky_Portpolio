@@ -1,0 +1,94 @@
+.loginForm{
+    width:300px;    
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    z-index:99;
+    background-color:#1a1a1a;
+    /* border-top-left-radius: 2rem;
+    border-top-right-radius: 2rem; */
+    text-align: center;
+    padding-bottom:20px;
+    transition:height 0.5s 0s ease;
+    float:left;
+}
+
+.select_view{
+    animation:select_view 0.5s 0s ease;
+    
+}
+.select_login{
+    animation:select_login 0.5s 0s ease;
+ 
+}
+.login_type{
+    display:inline-block;
+    width:50%; 
+    text-align:center;
+    height:50px;
+    vertical-align: middle;    
+    line-height:50px;    
+    cursor:context-menu;
+    color:white;
+    position:relative;
+}
+
+.login_type:not(.select){
+    cursor:pointer;
+}
+
+.selectBar{
+    height:2px;
+    position:absolute;
+    width:80%;
+    left:50%;
+    transform:translateX(-50%);
+    background-color:white;
+    transition:left 0.5s 0s ease;
+}
+
+.loginForm.select_login .selectBar{
+    left:150%;
+}
+/* 
+.login_type:after{
+    content:'';
+    width:80%;
+    height:2px;
+    background-color:white;
+    position:absolute;
+    left:50%;
+    bottom:0;
+    transform:translateX(-50%);
+}
+.login_type:not(.select):after{
+    background-color:#1a1a1a;
+} */
+
+.loginForm input{
+    margin-top:15px;
+    width:80%;
+    position: relative;
+    left:50%;
+    transform:translateX(-50%);
+    
+}
+
+@keyframes select_view{
+    0%{
+        height:230px
+    }
+    100%{
+        height:180px;
+    }
+}
+
+@keyframes select_login{
+    0%{
+        height:180px
+    }
+    100%{
+        height:230px;
+    }
+}

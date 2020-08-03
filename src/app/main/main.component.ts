@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {MainService} from './main.service';
+import {Router,ActivatedRoute} from '@angular/router';
+import {CookieService} from 'ngx-cookie-service'
+import {AppService} from './../app.service';
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -21,9 +24,13 @@ export class MainComponent implements OnInit {
     info_git:''
   };
   careerData = [];
-  constructor(private mainService:MainService) {    
-    this.getInfo("shdq");    
-   }
+  constructor(private mainService:MainService,private router:Router, private cookie:CookieService,private appService:AppService) {    
+    if(cookie.get("user_id") == ""){
+      router.navigate(['login']);
+    }
+    
+    this.getInfo(cookie.get("user_id"));
+  }
 
   ngOnInit(): void {    
     this.writeTitle();
@@ -32,12 +39,12 @@ export class MainComponent implements OnInit {
   getInfo(id){
     this.mainService.getUserInfo(id).subscribe(data=>{
       this.userData = (data as any).result[0];          
-      
+      this.mainService.getCareerInfo(id).subscribe(data=>{
+        this.careerData = (data as any).result;                 
+        this.appService.endLoading();
+      })  
     })
-    this.mainService.getCareerInfo(id).subscribe(data=>{
-      this.careerData = (data as any).result;                 
-      
-    })
+    
   }
   writeTitle(){
     var idx = 0;

@@ -1,16 +1,31 @@
  <div class="project_div"  *ngIf="projectList.length > 0">    
     <h2 class="project_type_title">&lt; Project with the '{{projectList[0].career_company}}' &gt; </h2>        
     <div class="project_item_div">
-        <div class="project_item_list col-md-4 col-xs-12">
-            <div class="project_item  col-xs-12" *ngFor="let project of projectList;let idx = index;">
+        <div class="project_item_list">
+            <div class="project_item " *ngFor="let project of projectList;let idx = index;"(click)="onDetailPicture()" >
                 <h3 class="project_title">{{project.project_name}}</h3>
+                <div class="project_account">{{project.project_account}}</div>
                 <div class="project_date">{{project.project_startDate | date:"yyyy-MM"}} ~ {{project.project_endDate | date:"yyyy-MM"}}</div>
+                <div class="project_explanation">{{project.project_explanation}}</div>
                 <hr />
             </div>
-        </div>
-        <div class="project_item_view col-md-8 col-xs-12">
-        <img src="" />        
-    </div>
+        </div>    
     </div>
 </div> 
 
+<div class="modal" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" [ngClass]="{show:isModal == true}" >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">          
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="onDetailPicture()" >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <img src="" />
+        </div>
+        <div class="modal-footer">          
+        </div>
+      </div>
+    </div>
+  </div>

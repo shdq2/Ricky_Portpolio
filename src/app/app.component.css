@@ -1,3 +1,30 @@
+@import 'https://fonts.googleapis.com/css?family=Oswald';
+.all_body{
+    position:fixed;
+    width:100%;
+    height:120%;
+    background-color:#408cea;
+    z-index:11;
+    transition:all 1s 1.5s ease;  
+    
+}
+
+svg{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    width:30%;
+}
+.all_body.loading{
+    top:0;
+}
+.all_body.remove{
+    height:0;
+    z-index:0;
+    top:-10%;
+}
+
 .app-wrapper{
     margin-top:50px;
     height:100%;
@@ -6,7 +33,7 @@
 .topBar{
     width:100%;
     height:50px;
-    background-color:#408cea;
+    background-color:#408cea; 
     position:fixed;
     top:0px;
     left:0px;
@@ -74,3 +101,74 @@ a:visited{
     color:white;
 }
 
+.editBtn{
+    position:relative;
+    top:50%;
+    transform:translateY(-50%);
+    float:right;
+}
+
+.loginForm{
+    position: absolute;    
+    width:50%;
+    top:0;
+    right:-100%;
+    text-align:right;    
+    transition:right 1s ease 0s;
+}
+
+.loginForm input{
+    position:relative;
+    height:50%;
+    line-height: 1.3;
+    display: inline-block;    
+    width:30%;    
+}
+
+.loginForm input[type="button"]{
+    width:20%;
+}
+.loginForm.show{
+    right:0;
+}
+
+
+/*-*******************/
+
+
+
+
+html, body {
+  background: #005C97;
+  background: linear-gradient(to left, #005C97 , #363795);
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Oswald', sans-serif;
+  letter-spacing: 6px;
+  overflow: hidden;
+}
+
+.water-fill {
+  animation: wave 0.7s infinite linear, 
+             fill-up 10s infinite ease-out alternate;
+}
+
+@keyframes wave {
+  0% { x: -400px; }
+  100% { x: 0; }
+}
+
+
+@keyframes fill-up {
+  0% {
+    height: 0;
+    y: 130px;
+  }
+  100% {
+    height: 160px;
+    y: -30px;
+  }
+}

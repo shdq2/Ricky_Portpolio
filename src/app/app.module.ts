@@ -6,21 +6,23 @@ import { AppComponent } from './app.component';
 import { MainComponent } from './main/main.component';
 import { ProjectComponent } from './project/project.component';
 import { AcitivityComponent } from './acitivity/acitivity.component';
-
 import {HttpClientModule} from '@angular/common/http';
+import { LoginComponent } from './login/login.component';
 @NgModule({
   declarations: [
     AppComponent,
     MainComponent,    
     ProjectComponent,
-    AcitivityComponent,    
+    AcitivityComponent,
+    LoginComponent,    
   ],
   imports: [
     BrowserModule,
     AppRouterModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+  
   ],
   providers: [],
   bootstrap: [AppComponent]

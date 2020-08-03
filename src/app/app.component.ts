@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {AppService} from './app.service';
+import {CookieService} from 'ngx-cookie-service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -7,7 +8,12 @@ import {AppService} from './app.service';
 })
 export class AppComponent {
   title = 'portpolio';
-  constructor(private appService:AppService){
-    
+  viewService;
+  loginForm={
+    id:'',
+    pw:''
+  }
+  constructor(private appService:AppService,private cookie:CookieService){
+    this.viewService = appService;
   }
 }

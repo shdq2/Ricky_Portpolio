@@ -1,37 +1,59 @@
-<div class="topBar">
-    <div class="header">
-        <a class="header_item" [routerLink]="['/main']">Main</a>
-        <a class="header_bar">|</a>
-        <a class="header_item" [routerLink]="['/activity']">Acitivity</a>
-        <!-- <a class="header_bar">|</a>
-        <a class="header_item" [routerLink]="['/project']">Project</a> -->
-    </div>
+<div class="all_body" [ngClass]="{remove:viewService.isLoading == true && viewService.EndLoading  == true}">  
+  <svg class="loading" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+  width="574.558px" height="190px" viewBox="0 0 574.558 120" enable-background="new 0 0 574.558 120" xml:space="preserve">
+<defs>
+ <pattern id="water" width=".25" height="1.1" patternContentUnits="objectBoundingBox">
+   <path fill="#fff" d="M0.25,1H0c0,0,0-0.659,0-0.916c0.083-0.303,0.158,0.334,0.25,0C0.25,0.327,0.25,1,0.25,1z"/>
+ </pattern>
+ 
+ <text id="text" transform="matrix(1 0 0 1 -8.0684 116.7852)" font-size="161.047">LOADING</text>
+ 
+ <mask id="text_mask">
+   <use x="0" y="0" xlink:href="#text" opacity="1" fill="#3498db"/>
+ </mask>
+</defs>
+
+<use x="0" y="0" xlink:href="#text" fill="#3498db"/>
+
+<rect class="water-fill" mask="url(#text_mask)" fill="url(#water)" x="-400" y="0" width="1600" height="120"/>
+</svg>
 </div>
-<div class="app-wrapper" >
-  <router-outlet></router-outlet>
+<div class="topBar" *ngIf="viewService.EndLoading == true">
+  <div class="header" *ngIf="viewService.EndLoading == true">
+      <a class="header_item" [routerLink]="['/main']">Main</a>
+      <a class="header_bar">|</a>
+      <a class="header_item" [routerLink]="['/activity']">Acitivity</a>
+      <!-- <a class="header_bar">|</a>
+      <a class="header_item" [routerLink]="['/project']">Project</a> -->       
+      
+  </div>
+
 </div>
-<div class="footer" >
-  <table class="table">
-    <tr>
-      <td>
-        <span>Front-End : Angular/Cli  </span>
-      </td>
-      <td>
-        <span>Back-End : Node.js</span>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <span>Server : AWS ( EC2 - ubuntu )  </span>
-      </td>
-      <td>
-        <span>DataBase : MySql</span>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="2">
-        참고 사이트 : <a href="https://docs.geundung.dev/">docs.geundung.dev</a>
-      </td>
-    </tr>
-  </table>
+<div class="app-wrapper" [ngStyle]="{'margin-top':viewService.EndLoading ? '50px' : '0px'}" >
+<router-outlet></router-outlet>
+</div>
+<div class="footer"  *ngIf="viewService.EndLoading == true">
+<table class="table">
+  <tr>
+    <td>
+      <span>Front-End : Angular/Cli  </span>
+    </td>
+    <td>
+      <span>Back-End : Node.js</span>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <span>Server : AWS ( EC2 - ubuntu )  </span>
+    </td>
+    <td>
+      <span>DataBase : MySql</span>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      참고 사이트 : <a href="https://docs.geundung.dev/">docs.geundung.dev</a>
+    </td>
+  </tr>
+</table>
 </div>  

@@ -17,10 +17,10 @@ export class AcitivityComponent implements OnInit {
   }
   getActivityTitle(id){
     this.activityService.getActivityTitle(id).subscribe(data=>{
-      this.activityTitle = (data as any).result;
+      this.activityTitle = (data as any).result;      
       for(var i = 0 ;i<this.activityTitle.length;i++){
-        this.activityService.getActivity(id,this.activityTitle[i].actitle_id).subscribe(result=>{
-          var d=  (result as any).result;          
+        this.activityService.getActivity(id,this.activityTitle[i].actitle_id).subscribe(resultData=>{
+          var d=  (resultData as any).result;                
           for(var j = 0 ; j <d.length;j++){
             this.activityData.push(d[j]);
           }                    
