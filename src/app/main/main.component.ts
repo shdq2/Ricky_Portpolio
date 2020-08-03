@@ -39,9 +39,10 @@ export class MainComponent implements OnInit {
   getInfo(id){
     this.mainService.getUserInfo(id).subscribe(data=>{
       this.userData = (data as any).result[0];          
-      this.mainService.getCareerInfo(id).subscribe(data=>{
-        this.careerData = (data as any).result;                 
+      this.mainService.getCareerInfo(id).subscribe(data=>{        
+        this.careerData = (data as any).result;           
         this.appService.endLoading();
+        console.log(this.appService.isLoading,this.appService.EndLoading,this.appService.isLogin);
       })  
     })
     

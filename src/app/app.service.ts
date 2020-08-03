@@ -24,7 +24,8 @@ export class AppService {
     console.log("test")
   } 
   endLoading(){
-    this.EndLoading = true;
+    this.EndLoading = true;    
+    console.log(this.EndLoading);
     
   }
 }
