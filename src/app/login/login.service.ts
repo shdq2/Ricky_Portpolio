@@ -15,4 +15,6 @@ export class LoginService {
   login(form){
     return this.http.post(this.appService.url+":3000/user/login",{id:form.id,pw:form.pw});
   }
+
+  
 }

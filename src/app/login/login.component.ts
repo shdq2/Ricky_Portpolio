@@ -12,16 +12,17 @@ export class LoginComponent implements OnInit {
 
   login_type = -1;
   isChk = true;
-  constructor(private appService:AppService,private loginService:LoginService,private router:Router,private cookie:CookieService) { }
+  constructor(private appService:AppService,private loginService:LoginService,private router:Router,private cookie:CookieService) {
+    this.appService.clearCache();
+   }
   loginForm={
     id:'',
     pw:''
   }
 
-  ngOnInit(): void {
-    if(this.cookie.get("user_id") != ""){
-      this.router.navigate(['main']);
-    }
+  ngOnInit(): void {   
+    
+
   }
 
   login(){
@@ -43,7 +44,15 @@ export class LoginComponent implements OnInit {
       })
     }else{
       this.loginService.login(this.loginForm).subscribe(data=>{
-        console.log(data);
+        var loginData = (data as any).result[0];
+        if(loginData != null){  
+          this.appService.isAdmin = true;
+          this.cookie.set('user_id',this.loginForm.id,1);
+          this.cookie.set('admin',"true");
+          this.router.navigate(['main']);
+        }else{
+          alert("data Error");
+        }        
       })
     }    
   }

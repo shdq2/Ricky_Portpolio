@@ -15,5 +15,11 @@ export class AppComponent {
   }
   constructor(private appService:AppService,private cookie:CookieService){
     this.viewService = appService;
+    if(cookie.get("admin") == "true"){
+      appService.isAdmin = true;      
+    }    
+    if(cookie.get("user_id") != ""){
+      appService.isLoading = true;
+    }
   }
 }

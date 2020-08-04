@@ -6,6 +6,9 @@ const app = express();
 const user = require('./routers/userRouter');
 const activity = require('./routers/activityRouter');
 const project = require('./routers/projectRouter');
+const admin_user = require('./routers/admin/userRouter');
+const admin_activity = require('./routers/admin/activityRouter');
+const admin_project = require('./routers/admin/projectRouter');
 const cors = require('cors');
 //var cookie = require('cookie-parser');
 
@@ -25,6 +28,9 @@ app.use(express.static(path.join(__dirname,'../dist')));
 app.use('/user',user);
 app.use('/activity',activity);
 app.use('/project',project);
+app.use('/admin/user',admin_user);
+app.use('/admin/activity',admin_activity);
+app.use('/admin/project',admin_project);
 
 const port = process.env.PORT || 3000;
 app.set('port' , port );

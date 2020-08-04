@@ -8,13 +8,17 @@ import { ProjectComponent } from './project/project.component';
 import { AcitivityComponent } from './acitivity/acitivity.component';
 import {HttpClientModule} from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
+import {MatDatepickerModule} from '@angular/material/datepicker'
+import {MatNativeDateModule} from '@angular/material/core'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
+
 @NgModule({
   declarations: [
     AppComponent,
     MainComponent,    
     ProjectComponent,
     AcitivityComponent,
-    LoginComponent,    
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -22,7 +26,9 @@ import { LoginComponent } from './login/login.component';
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-  
+    MatDatepickerModule,
+    MatNativeDateModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

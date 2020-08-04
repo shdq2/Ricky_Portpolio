@@ -16,4 +16,21 @@ export class MainService {
   getCareerInfo(id){
     return this.http.get(this.appService.url+':3000/user/careerInfo?id='+id);
   }
+
+  getTitleTiping(id){
+    return this.http.get(this.appService.url+':3000/user/title?id='+id);
+  }
+
+  editAbout(id,form){    
+    return this.http.post(this.appService.url+":3000/user/editinfo",{id:id,form:form});
+  }
+
+  editCareer(id,form){
+    return this.http.post(this.appService.url+":3000/user/editcareer",{id:id,form:form});
+  }
+
+  insertCareer(form){
+    return this.http.post(this.appService.url+":3000/user/insertcareer",{form:form});
+  }
+
 }

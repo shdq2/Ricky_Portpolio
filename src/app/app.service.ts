@@ -9,23 +9,26 @@ export class AppService {
   isLogin = false;
   isLoading = false;
   EndLoading = false;
+  isAdmin =false;
   url;
   constructor(private acRouter:ActivatedRoute,private http:HttpClient,private cookie:CookieService) {     
     var urlData = window.location.href.substring(0,window.location.href.lastIndexOf(":"));
     this.url = urlData;    
-    if(cookie.get("user_id") != ""){
-      this.SuccessLogin();
-    }
+    
   }
 
   SuccessLogin(){
     //this.isLogin = true;
-    this.isLoading = true;
-    console.log("test")
+    this.isLoading = true;    
   } 
   endLoading(){
     this.EndLoading = true;    
-    console.log(this.EndLoading);
-    
+  }
+
+  clearCache(){
+    this.EndLoading = false;
+    this.isLoading = false;
+    this.isAdmin = false;
+    this.cookie.deleteAll();
   }
 }

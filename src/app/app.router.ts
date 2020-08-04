@@ -3,8 +3,9 @@ import {MainComponent} from './main/main.component';
 import {AcitivityComponent} from './acitivity/acitivity.component';
 import {ProjectComponent} from './project/project.component';
 import {LoginComponent} from './login/login.component';
+
 const AppRoutes: Routes = [  
-  { path: '', redirectTo: '/main', pathMatch: 'full' }, // 첫 화면을 login 페이지로 설정  
+  { path: '', redirectTo: '/login', pathMatch: 'full' }, // 첫 화면을 login 페이지로 설정  
   { path: 'main', component: MainComponent, }, // url 경로가 /main 일때 MainComponent를 보여준다.
   { path: 'activity', component: AcitivityComponent, }, // url 경로가 /main 일때 MainComponent를 보여준다.
   { path: 'project/:id', component: ProjectComponent, }, // url 경로가 /main 일때 MainComponent를 보여준다.

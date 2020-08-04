@@ -1,3 +1,4 @@
+<input type="button" value="수정" class="btn btn-primary EditBtn" (click)="changeBtnClick()" *ngIf="isAdmin == true && isEdit == false" (click)="changeBtnClick(0)"/><input type="button" value="완료" class="btn btn-primary EditBtn" (click)="changeBtnClick(0)" *ngIf="isAdmin == true && isEdit == true" (click)="changeBtnClick()"/> 
 <div class="main_header">
     <div class="main_message">
         <h1 [ngClass]="{idle:cursorToggle == true}" >{{currentTitle}}</h1>        
@@ -6,25 +7,55 @@
     </div>
 </div>
 <div class="main_about main_content">
-    <h2 class="main_title">&lt; About Me &gt;</h2>
+    <h2 class="main_title">&lt; About Me &gt; </h2>    
     <img src="./../../assets/img/default.png"/>
-    <div class="main_about_name main_about_info">{{userData.info_name}}</div>
-    <div class="main_about_name_eng main_about_info">{{userData.info_eng_name}}</div>
-    <div class="main_about_name_eng_sub main_about_info">( {{userData.info_nickname}} )</div>
-    <br />
-    <br />
-    <div class="main_about_info" ><img src="https://img.icons8.com/material-outlined/24/000000/new-post.png"/><a href="mailto:{{userData.info_email}}">{{userData.info_email}}</a></div>
-    <div class="main_about_info"><img src="https://img.icons8.com/material-rounded/24/000000/github.png"/><a href="https://github.com/{{userData.info_git}}">{{userData.info_git}}</a></div>
-    <div class="main_about_info"><img src="https://img.icons8.com/material-rounded/24/000000/smartphone-approve.png"/>{{userData.info_phone}}</div>
+    <div *ngIf="isEdit == false">
+        <div class="main_about_name main_about_info">{{userData.info_name}}</div>
+        <div class="main_about_name_eng main_about_info">{{userData.info_eng_name}}</div>
+        <div class="main_about_name_eng_sub main_about_info">( {{userData.info_nickname}} )</div>
+        <br />
+        <br />
+        <div class="main_about_info" ><img src="https://img.icons8.com/material-outlined/24/000000/new-post.png"/><a href="mailto:{{userData.info_email}}">{{userData.info_email}}</a></div>
+        <div class="main_about_info"><img src="https://img.icons8.com/material-rounded/24/000000/github.png"/><a href="https://github.com/{{userData.info_git}}">{{userData.info_git}}</a></div>
+        <div class="main_about_info"><img src="https://img.icons8.com/material-rounded/24/000000/smartphone-approve.png"/>{{userData.info_phone}}</div>
+    </div>
+    <div *ngIf="isAdmin == true && isEdit == true">
+        <table class="table editTable">
+            <tr>
+                <td>Name</td>
+                <td><input type="text" class="form-control" [(ngModel)]="changeInfo.userData.info_name"/></td>
+            </tr>
+            <tr>
+                <td>Eng Name</td>
+                <td><input type="text" class="form-control"[(ngModel)]="changeInfo.userData.info_eng_name"/></td>
+            </tr>
+            <tr>
+                <td>Nick Name</td>
+                <td><input type="text" class="form-control"[(ngModel)]="changeInfo.userData.info_nickname" /></td>
+            </tr>
+            <tr>
+                <td>Email </td>
+                <td><input type="text" class="form-control" [(ngModel)]="changeInfo.userData.info_email" /></td>
+            </tr>
+            <tr>
+                <td>Git</td>
+                <td><input type="text" class="form-control" [(ngModel)]="changeInfo.userData.info_git"/></td>
+            </tr>
+            <tr>
+                <td>Phone Number</td>
+                <td><input type="text" class="form-control" [(ngModel)]="changeInfo.userData.info_phone" /></td>
+            </tr>
+        </table>        
+    </div>
+    
 </div>
 <div class="main_career main_content">
-    <h2 class="main_title">&lt; Career &gt;</h2>
-    <ul class="career">
-        
-        <li class="career_line" *ngFor="let career of careerData;let idx = index;">
-            <div class="career_item">
+    <h2 class="main_title">&lt; Career &gt; </h2>
+    <ul class="career" *ngIf="isEdit == false">        
+        <li class="career_line" *ngFor="let career of careerData;let idx = index;" >
+            <div class="career_item" >
                 <h2 class="career_item_title">{{career.career_company}}</h2>
-                <p class="career_item_date">{{career.career_startDate | date:"yyyy.MM"}} ~ {{career.career_endDate | date:"yyyy.MM"}}</p>
+                <p class="career_item_date">{{career.career_startDate }} ~ {{career.career_endDate }}</p>
                 <div class="career_item_content">{{career.career_role}}</div>
                 <div class="portContainer" [routerLink]="['/project',career.career_id]">
                     <img class="gotoPortpolio left" src="https://img.icons8.com/flat_round/64/000000/arrow-right.png"/> 
@@ -34,6 +65,72 @@
             </div>            
         </li>       
     </ul>
+    <div *ngIf="isAdmin == true && isEdit == true" #editCareer>
+        <div  >
+            <table class="table editTable" *ngFor="let career of this.changeInfo.career;let idx = index">
+                <tr>
+                    <td>회사명</td>
+                    <td><input type="text" class="form-control" [(ngModel)]="career.career_company"/></td>
+                </tr>
+                <tr>
+                    <td>기간</td>
+                    <td>
+                        <mat-form-field appearance="fill">                            
+                           <input matInput [matDatepicker]="dp3" disabled [(ngModel)]="career.career_startDate" class="datepick">
+                           <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+                           <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+                        </mat-form-field>
+                        ~
+                        <mat-form-field appearance="fill">                            
+                            <input matInput [matDatepicker]="dp4" disabled [(ngModel)]="career.career_endDate" class=" datepick">
+                            <mat-datepicker-toggle matSuffix [for]="dp4"></mat-datepicker-toggle>
+                            <mat-datepicker #dp4 disabled="false"></mat-datepicker>
+                            <input type="button" value="재직중" (click)="deleteEndDate(idx)" *ngIf="idx == this.changeInfo.career.length-1" class="currentCompany"/>
+                            <img src="assets/img/minusIcon.png" id="plusBtn" (click)="deleteCareer(career.career_id)" class="deleteNewCareer"/>
+                         </mat-form-field>
+                    </td>
+                </tr>
+                <tr>
+                    <td>주요 역할</td>
+                    <td><input type="text" class="form-control" [(ngModel)]="career.career_role"/></td>
+                </tr>                
+            </table>
+
+        </div>    
+
+        <h2 class="main_title" *ngIf="viewInsert.length >0">&lt; Insert Career &gt; </h2>
+        <table class="table editTable" *ngFor="let InsertCareer of viewInsert;let idx = index;">
+            <tr>
+                <td>회사명</td>
+                <td>                    
+                    <input type="text" class="form-control" [(ngModel)]="InsertCareer.career_company" value="{{InsertCareer.career_company}}" /></td>
+            </tr>
+            <tr>
+                <td>기간</td>
+                <td>
+                    <mat-form-field appearance="fill">                            
+                       <input matInput [matDatepicker]="dp3" disabled [(ngModel)]="viewInsert[idx].career_startDate" class="datepick">
+                       <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+                       <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+                    </mat-form-field>
+                    ~
+                    <mat-form-field appearance="fill">                            
+                        <input matInput [matDatepicker]="dp4" disabled [(ngModel)]="viewInsert[idx].career_endDate" class=" datepick">
+                        <mat-datepicker-toggle matSuffix [for]="dp4"></mat-datepicker-toggle>
+                        <mat-datepicker #dp4 disabled="false"></mat-datepicker>
+                        <input type="button" value="재직중" (click)="deleteNewDate(idx)" *ngIf="idx == viewInsert.length-1" class="currentCompany"/>
+                        
+                        <img src="assets/img/minusIcon.png" id="plusBtn" (click)="deleteNewCareer(idx)" class="deleteNewCareer"/>                        
+                     </mat-form-field>
+                </td>
+            </tr>
+            <tr>
+                <td>주요 역할</td>
+                <td><input type="text" class="form-control" [(ngModel)]="viewInsert[idx].career_role"/></td>
+            </tr>                
+        </table>
+        <img src="assets/img/plusIcon.png" id="plusBtn" (click)="addCareer()"/>
+    </div>    
 </div>
 
  
