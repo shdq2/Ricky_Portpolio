@@ -1,15 +1,20 @@
+<input type="button" value="수정" class="btn btn-primary EditBtn" (click)="changeBtnClick()" *ngIf="isAdmin == true && isEdit == false" (click)="changeBtnClick(0)"/><input type="button" value="완료" class="btn btn-primary EditBtn" (click)="changeBtnClick(0)" *ngIf="isAdmin == true && isEdit == true" (click)="changeBtnClick()"/> 
 <div class="activity_div">
-    <div class="activity_content" *ngFor="let acTitle of activityTitle">
+    <div  *ngIf="isEdit == false">
+        <div class="activity_content" *ngFor="let acTitle of activityTitle">
         <h2 class="activity_title">&lt; {{acTitle.actitle_title}} &gt;</h2>
-        <div *ngFor="let activity of activityData;"> 
-            <div class="activity_content_item"  *ngIf="acTitle.actitle_id == activity.actitle_id">
-                <h3 class="acitvity_content_item_title">{{activity.activity_title}}</h3>
-                <span class="acitvity_content_item_detail">{{activity.activity_detail}}</span>
-                <div class="acitvity_content_item_date">{{activity.activity_date | date:"yyyy.MM"}}</div>
-                <div class="acitvity_content_item_publisher">{{activity.activity_publisher}}</div>
-                <div class="acitvity_content_item_content">{{activity.activity_content}}</div>
+        
+            <div *ngFor="let activity of activityData;"> 
+                <div class="activity_content_item"  *ngIf="acTitle.actitle_id == activity.actitle_id">
+                    <h3 class="acitvity_content_item_title">{{activity.activity_title}}</h3>
+                    <span class="acitvity_content_item_detail">{{activity.activity_detail}}</span>
+                    <div class="acitvity_content_item_date">{{activity.activity_date | date:"yyyy.MM"}}</div>
+                    <div class="acitvity_content_item_publisher">{{activity.activity_publisher}}</div>
+                    <div class="acitvity_content_item_content">{{activity.activity_content}}</div>
+                </div>
             </div>
         </div>
+        
         
         <!-- <div class="activity_content_item">
             <h3 class="acitvity_content_item_title">정보처리기사</h3>
@@ -18,17 +23,78 @@
             <div class="acitvity_content_item_publisher">과학기술정보통신부</div>
         </div> -->
     </div>
-    
-    <!-- <div class="activity_content">
-        <h2 class="activity_title">&lt; Activity &gt;</h2>
-        <div class="activity_content_item">
-            <h3 class="acitvity_content_item_title">빅데이터 기반 Java를 활용한 데이터베이스 개발자 양성과정</h3>
-            <span class="acitvity_content_item_detail">수료</span>
-            <div class="acitvity_content_item_date">2017.12 ~ 2018.06</div>
-            <div class="acitvity_content_item_publisher">한국기술교육직업전문학교</div>
-            <div class="acitvity_content_item_content">Spring, Jsp, Tomcat 서버, MySql을 활용하여 어플리케이션 구현 및 배포</div>
+    <div *ngIf="isEdit == true">
+        <div class="activity_admin_top_section">
+            <div *ngFor="let title of changeInfo.actitle;let idx = index" class="title active" (click)="changeTitle(idx)" [ngClass]="{active:selectIdx == idx}" >
+                {{title.actitle_title}}                
+            </div>
+            
         </div>
-    </div> -->
+        <div class="activity_admin_content_section">
+            <h3> &nbsp; 타이틀 수정 &nbsp;</h3>
+            <div class="input_section">
+                <input type="text" [(ngModel)]="changeInfo.actitle[selectIdx].actitle_title" class="form-control" style="display:inline-block;width:60%;"/>
+                <input type="button" value="수정" class="btn btn-primary" (click)="editTitle()"/>
+            </div>
+            <hr />
+            <h3> &nbsp; 액티비티 수정 &nbsp;</h3>
+            <div class="activity_section" >
+                <div *ngFor = "let activity of changeInfo.activity;let idx = index;">
+                    <div *ngIf="activity.actitle_id == changeInfo.actitle[selectIdx].actitle_id" class="activity_Item">
+                        <div class="setion">
+                            <div class="col-md-2 col-3 section_item" >
+                                이름
+                            </div>
+                            <div class="col-md-4 col-9 section_item" >
+                                <input type="text" class="form-control" [(ngModel)]="activity.activity_title">
+                            </div>
+                            <div class="col-md-2 col-3 section_item" >
+                                등급
+                            </div>
+                            <div class="col-md-4 col-9 section_item" >
+                                <input type="text" class="form-control"  [(ngModel)]="activity.activity_detail">
+                            </div>
+                        </div>
+                        <div class="setion">
+                            <div class="col-md-2 col-3 section_item" style="font-size:15px;">
+                                취득일자
+                            </div>
+                            <div class="col-md-4 col-9 section_item" >
+                                <mat-form-field appearance="fill">                            
+                                    <input matInput [matDatepicker]="dp4" disabled [(ngModel)]="activity.activity_date" class=" datepick">
+                                    <mat-datepicker-toggle matSuffix [for]="dp4"></mat-datepicker-toggle>
+                                    <mat-datepicker #dp4 disabled="false"></mat-datepicker>                                                                    
+                                 </mat-form-field>
+                            </div>
+                            <div class="col-md-2 col-3 section_item" >
+                                발급처
+                            </div>
+                            <div class="col-md-4 col-9 section_item" >
+                                <input type="text" class="form-control"  [(ngModel)]="activity.activity_publisher">
+                            </div>
+                        </div>
+                        <div class="setion">
+                            <div class="col-md-2 col-3 section_item" >
+                                설명
+                            </div>
+                            <div class="col-md-10 col-9 section_item" >
+                                <input type="text" class="form-control"  [(ngModel)]="activity.activity_content">
+                            </div>                            
+                        </div>
+                        <div class="btn_section" >
+                            <input type="button" class="btn btn-danger" value="삭제" (click)="deleteActivity(activity,idx)"/>
+                            <input type="button" class="btn btn-primary" value="수정" (click)="editActivity(idx)"/>                            
+                       </div>
+                        <hr />
+                    </div>                    
+                </div>
+            </div>
+        </div>
+</div>
 
-    
+<div class="resultUpdate" [ngClass]="{show:updateComplete == true && notShow == 0}">
+    업데이트가 완료되었습니다.
+</div>
+<div class="resultUpdate" [ngClass]="{show:updateComplete == true && notShow == 1}">
+    업데이트를 할 내용이 없습니다.
 </div>

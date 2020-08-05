@@ -116,7 +116,7 @@
 .career{
     padding:0;
 }
-@media (min-width:400px){
+@media (min-width:500px){
     .career > .career_line{
         list-style-type: none;
         width:6px;
@@ -163,7 +163,7 @@
         display:none;
     }
 }
-@media (max-width : 399px){
+@media (max-width : 499px){
     .career > .career_line{
         list-style-type: none;
         width:6px;

@@ -1,8 +1,10 @@
-import { Component, OnInit, Renderer2,ViewChild,ElementRef } from '@angular/core';
+import { Component, OnInit, Renderer2,Inject } from '@angular/core';
 import {MainService} from './main.service';
 import {Router,ActivatedRoute} from '@angular/router';
 import {CookieService} from 'ngx-cookie-service'
 import {AppService} from './../app.service';
+import {MatDialog, MatDialogRef,MAT_DIALOG_DATA} from '@angular/material/dialog'
+
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -48,7 +50,7 @@ export class MainComponent implements OnInit {
 
 
   viewInsert:object[];
-  constructor(private mainService:MainService,private router:Router, private cookie:CookieService,private appService:AppService,private renderer:Renderer2) {    
+  constructor(private mainService:MainService,private router:Router, private cookie:CookieService,private appService:AppService,public dialog:MatDialog) {    
     if(cookie.get("user_id") == ""){
       router.navigate(['login']);
     }
@@ -247,11 +249,37 @@ export class MainComponent implements OnInit {
       });      
       
   }
-  deleteCareer(id){
-    console.log(id);
+  deleteCareer(career,idx){
+    const dialogRef = this.dialog.open(Dialog,
+      {
+        data:{career:career}
+      });
+    dialogRef.afterClosed().subscribe(result=>{
+      if(result){
+        this.mainService.removeCareer(career.career_id).subscribe(data=>{
+          this.careerData.splice(idx);
+          this.changeInfo.career.splice(idx);
+        })    
+      }      
+    })
   }
 
   deleteNewCareer(idx){
     this.viewInsert.splice(idx);    
   }
+}
+
+
+@Component({
+  selector:'dialog-message',
+  templateUrl:'dialog.html',
+  styleUrls: ['./main.component.css']
+})
+export class Dialog{
+  test:any;
+  constructor(public dialogRef:MatDialogRef<Dialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any){}
+  onClick(val){
+    this.dialogRef.close(val);
+  }  
 }

@@ -33,4 +33,7 @@ export class MainService {
     return this.http.post(this.appService.url+":3000/user/insertcareer",{form:form});
   }
 
+  removeCareer(id){
+    return this.http.post(this.appService.url+":3000/user/removecareer",{id:id});
+  }
 }

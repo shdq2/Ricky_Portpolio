@@ -15,4 +15,15 @@ export class ActivityService {
   getActivity(id,actitle_id){
     return this.http.get(this.appService.url+":3000/activity/getActivity?id="+id+"&title="+actitle_id);
   }
+
+  updateActivityTitle(id,title){
+    return this.http.post(this.appService.url+":3000/activity/updatetitle",{id:id,title:title});
+  }
+
+  updateActivity(form){
+    return this.http.post(this.appService.url+":3000/activity/updateactivity",{form:form});
+  }
+  deleteActivity(id){
+    return this.http.post(this.appService.url+":3000/activity/deleteactivity",{id:id});
+  }
 }

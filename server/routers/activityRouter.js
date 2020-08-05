@@ -47,4 +47,73 @@ router.get('/getActivity',function(req,res){
         res.json(resultJson);
     })
 })
+
+
+router.post('/updatetitle',function(req,res){    
+    if(connection == null){
+        connection = mysql_dbc.get();
+    }    
+    var data = req.body;    
+    var resultJson = {};    
+    var stmt = 'update activityTitle set actitle_title ="'+data.title+'" where actitle_id ="'+data.id+'"' ;        
+    connection.query(stmt, function (err, result) {
+        if(err) {     
+            resultJson.id = data.id;       
+            resultJson.err = err;            
+            // res.json(err);
+        }else{
+            resultJson.id = data.id;       
+            resultJson.result = result;            
+            //   res.json(result);
+        }   
+        
+        res.json(resultJson);
+    })
+})
+
+router.post('/updateactivity',function(req,res){    
+    if(connection == null){
+        connection = mysql_dbc.get();
+    }    
+    var data = req.body;    
+    var resultJson = {};    
+    var stmt = 'update activity set activity_title="'+data.form.activity_title+'",activity_detail="'+data.form.activity_detail+'",activity_date="'+data.form.activity_date+'",activity_publisher="'+data.form.activity_publisher+'",activity_content="'+data.form.activity_content+'" where activity_id ="'+data.form.activity_id+'";';        
+    connection.query(stmt, function (err, result) {
+        if(err) {     
+            resultJson.id = data.id;       
+            resultJson.err = err;            
+            // res.json(err);
+        }else{
+            resultJson.id = data.id;       
+            resultJson.result = result;            
+            //   res.json(result);
+        }   
+        
+        res.json(resultJson);
+    })
+})
+
+router.post('/deleteactivity',function(req,res){    
+    if(connection == null){
+        connection = mysql_dbc.get();
+    }    
+    var data = req.body;    
+    var resultJson = {};    
+    var stmt = 'delete from activity where activity_id ='+data.id;        
+    connection.query(stmt, function (err, result) {
+        if(err) {     
+            resultJson.id = data.id;       
+            resultJson.err = err;            
+            // res.json(err);
+        }else{
+            resultJson.id = data.id;       
+            resultJson.result = result;            
+            //   res.json(result);
+        }   
+        
+        res.json(resultJson);
+    })
+})
+
+
 module.exports = router;

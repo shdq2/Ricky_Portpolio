@@ -187,5 +187,27 @@ router.post('/insertcareer',function(req,res){
         res.json(resultJson);
     })
 })
-
+router.post('/removecareer',function(req,res){    
+    if(connection == null){
+        connection = mysql_dbc.get();
+    }    
+    var data = req.body;    
+    var resultJson = {};    
+    
+    var stmt = 'delete from career where career_id = "'+data.id+'"';
+    
+    connection.query(stmt, function (err, result) {
+        if(err) {     
+            resultJson.id = data.id;       
+            resultJson.err = err;            
+            // res.json(err);
+        }else{
+            resultJson.id = data.id;       
+            resultJson.result = result;            
+            //   res.json(result);
+        }   
+        
+        res.json(resultJson);
+    })
+})
 module.exports = router;

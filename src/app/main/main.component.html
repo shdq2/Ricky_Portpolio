@@ -86,7 +86,7 @@
                             <mat-datepicker-toggle matSuffix [for]="dp4"></mat-datepicker-toggle>
                             <mat-datepicker #dp4 disabled="false"></mat-datepicker>
                             <input type="button" value="재직중" (click)="deleteEndDate(idx)" *ngIf="idx == this.changeInfo.career.length-1" class="currentCompany"/>
-                            <img src="assets/img/minusIcon.png" id="plusBtn" (click)="deleteCareer(career.career_id)" class="deleteNewCareer"/>
+                            <img src="assets/img/minusIcon.png" id="plusBtn" (click)="deleteCareer(career,idx)" class="deleteNewCareer"/>
                          </mat-form-field>
                     </td>
                 </tr>
