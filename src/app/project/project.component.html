@@ -1,4 +1,6 @@
- <div class="project_div"  *ngIf="projectList.length > 0">    
+<input type="button" value="수정" class="btn btn-primary EditBtn" (click)="changeBtnClick()" *ngIf="isAdmin == true && isEdit == false" (click)="changeBtnClick(0)"/><input type="button" value="완료" class="btn btn-primary EditBtn" (click)="changeBtnClick(0)" *ngIf="isAdmin == true && isEdit == true" (click)="changeBtnClick()"/> 
+<div *ngIf="isEdit == false">
+  <div class="project_div"  *ngIf="projectList.length > 0">    
     <h2 class="project_type_title">&lt; Project with the '{{projectList[0].career_company}}' &gt; </h2>        
     <div class="project_item_div">
         <div class="project_item_list">
@@ -29,3 +31,123 @@
       </div>
     </div>
   </div>
+</div>
+ 
+<div *ngIf="isEdit == true">  
+  <div class="project_admin_content_section">
+      <h3> &nbsp; project 수정 &nbsp; <img src="assets/img/plusIcon.png" class="plusIcon" (click)="addproject()" /></h3>
+      
+      <div class="project_section" >
+          <div *ngFor = "let project of changeInfo;let idx = index;">              
+                  <div class="setion">
+                      <div class="col-md-2 col-3 section_item" >
+                          이름
+                      </div>
+                      <div class="col-md-4 col-9 section_item" >
+                          <input type="text" class="form-control" [(ngModel)]="project.project_name">
+                      </div>
+                      <div class="col-md-2 col-3 section_item" >
+                          의뢰처
+                      </div>
+                      <div class="col-md-4 col-9 section_item" >
+                          <input type="text" class="form-control"  [(ngModel)]="project.project_account">
+                      </div>
+                  </div>
+                  <div class="setion">
+                      <div class="col-md-2 col-3 section_item" style="font-size:15px;">
+                          시작일
+                      </div>
+                      <div class="col-md-4 col-9 section_item" >
+                          <mat-form-field appearance="fill">                            
+                              <input matInput [matDatepicker]="dp4" disabled [(ngModel)]="project.project_startDate" class=" datepick">
+                              <mat-datepicker-toggle matSuffix [for]="dp4"></mat-datepicker-toggle>
+                              <mat-datepicker #dp4 disabled="false"></mat-datepicker>                                                                    
+                           </mat-form-field>
+                      </div>
+                      <div class="col-md-2 col-3 section_item" >
+                          종료일
+                      </div>
+                      <div class="col-md-4 col-9 section_item" >
+                        <mat-form-field appearance="fill">                            
+                          <input matInput [matDatepicker]="dp3" disabled [(ngModel)]="project.project_endDate" class="datepick">
+                          <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+                          <mat-datepicker #dp3 disabled="false"></mat-datepicker>                                                                    
+                       </mat-form-field>
+                      </div>
+                  </div>
+                  <div class="setion">
+                      <div class="col-md-2 col-3 section_item" >
+                          설명
+                      </div>
+                      <div class="col-md-10 col-9 section_item" >
+                          <input type="text" class="form-control"  [(ngModel)]="project.project_explanation">
+                      </div>                            
+                  </div>
+                  <div class="btn_section" >
+                      <input type="button" class="btn btn-info" value="사진 추가" style="float:left" (click)="addPicture(idx)"/>
+                      <input type="button" class="btn btn-danger" value="삭제" (click)="deleteProject(project,idx)"/>
+                      <input type="button" class="btn btn-primary" value="수정" (click)="editProject(project,idx)"/>                            
+                 </div>
+                  <hr />                             
+          </div>
+                                
+      </div>
+      <div class="project_section" *ngIf="newProject.length > 0">
+        <h2>&nbsp; 프로젝트 추가 &nbsp;</h2>
+        <div *ngFor = "let project of newProject;let idx = index;">              
+                <div class="setion">
+                    <div class="col-md-2 col-3 section_item" >
+                        이름
+                    </div>
+                    <div class="col-md-4 col-9 section_item" >
+                        <input type="text" class="form-control" [(ngModel)]="project.project_name">
+                    </div>
+                    <div class="col-md-2 col-3 section_item" >
+                        의뢰처
+                    </div>
+                    <div class="col-md-4 col-9 section_item" >
+                        <input type="text" class="form-control"  [(ngModel)]="project.project_account">
+                    </div>
+                </div>
+                <div class="setion">
+                    <div class="col-md-2 col-3 section_item" style="font-size:15px;">
+                        시작일
+                    </div>
+                    <div class="col-md-4 col-9 section_item" >
+                        <mat-form-field appearance="fill">                            
+                            <input matInput [matDatepicker]="dp4" disabled [(ngModel)]="project.project_startDate" class=" datepick">
+                            <mat-datepicker-toggle matSuffix [for]="dp4"></mat-datepicker-toggle>
+                            <mat-datepicker #dp4 disabled="false"></mat-datepicker>                                                                    
+                         </mat-form-field>
+                    </div>
+                    <div class="col-md-2 col-3 section_item" >
+                        종료일
+                    </div>
+                    <div class="col-md-4 col-9 section_item" >
+                      <mat-form-field appearance="fill">                            
+                        <input matInput [matDatepicker]="dp3" disabled [(ngModel)]="project.project_endDate" class="datepick">
+                        <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+                        <mat-datepicker #dp3 disabled="false"></mat-datepicker>                                                                    
+                     </mat-form-field>
+                    </div>
+                </div>
+                <div class="setion">
+                    <div class="col-md-2 col-3 section_item" >
+                        설명
+                    </div>
+                    <div class="col-md-10 col-9 section_item" >
+                        <input type="text" class="form-control"  [(ngModel)]="project.project_explanation">
+                    </div>                            
+                </div>
+                <div class="btn_section" >
+                    <input type="button" class="btn btn-danger" value="삭제" (click)="deleteNewProject(idx)"/>
+                    <input type="button" class="btn btn-primary" value="추가" (click)="addNewProject(project,idx)"/>                            
+               </div>
+                <hr />                             
+        </div>
+                              
+    </div>
+  </div>
+
+  
+</div>

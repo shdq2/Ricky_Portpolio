@@ -1,0 +1,28 @@
+<div class="project_section">
+    <h2>&nbsp; 프로젝트 이미지 목록 &nbsp;</h2>
+        <div  class="imgListContainer">
+            <img *ngFor="let picture of pictureList;let idx =index" [src]="picture.propic_img" (click)="selectPicture(idx)"/>
+            <img src="assets/img/plusIcon.png" class="plusBtn" (click)="addPicture()"/>
+        </div>
+    <hr />
+    <h2>&nbsp; 프로젝트 이미지 추가 &nbsp;</h2>
+    <div class="col-md-12 col-12 picture_container">
+        <label for="img">이미지 선택</label>
+        <input type="file" id="img" #imgSelector (change)="imgChange(imgSelector.files)" accept="image/*"/>
+        <br />
+        <div class="col-md-6 col-12 display img_section">
+            <img [src]="activeProject.imgSrc" id="selectImg" #img />
+        </div>
+        <div class="col-md-6 col-12 content_section display">
+            <span>텍스트 입력</span>
+            <br />
+            <textarea class="form-control" rows="10" [(ngModel)]="activeProject.context"></textarea>
+        </div>
+        <div class="col-md-12 col-12 btn_section">
+            <input type="button" class="btn btn-warning" style="float:right" value="수정" (click)="editpicture()" *ngIf="isAddChk == false">
+            <input type="button" class="btn btn-danger" style="float:right" value="삭제" (click)="deletePicture()" *ngIf="isAddChk == false">
+            <input type="button" class="btn btn-primary" style="float:right" value="추가" (click)="uploadImg()" *ngIf="isAddChk == true">
+            
+        </div>
+    </div>    
+</div>
