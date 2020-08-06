@@ -115,5 +115,27 @@ router.post('/deleteactivity',function(req,res){
     })
 })
 
+router.post('/addactivity',function(req,res){    
+    if(connection == null){
+        connection = mysql_dbc.get();
+    }    
+    var data = req.body;    
+    var resultJson = {};    
+    var stmt = 'insert into activity(activity_title,activity_detail,activity_date,activity_publisher,activity_content,actitle_id,info_id) values("'+data.form.activity_title+'","'+data.form.activity_detail+'","'+data.form.activity_date+'","'+data.form.activity_publisher+'","'+data.form.activity_content+'","'+data.form.actitle_id+'","'+data.form.info_id+'")'  ;        
+    connection.query(stmt, function (err, result) {
+        if(err) {     
+            resultJson.id = data.id;       
+            resultJson.err = err;            
+            // res.json(err);
+        }else{
+            resultJson.id = data.id;       
+            resultJson.result = result;            
+            //   res.json(result);
+        }   
+        
+        res.json(resultJson);
+    })
+})
+
 
 module.exports = router;

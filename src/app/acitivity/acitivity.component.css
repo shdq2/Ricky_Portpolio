@@ -160,3 +160,9 @@
     bottom:50px;
     opacity:1;
 }
+
+.plusIcon {
+    position :absolute;
+    width:30px;
+    cursor:pointer;
+}

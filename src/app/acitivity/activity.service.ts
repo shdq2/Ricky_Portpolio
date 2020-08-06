@@ -26,4 +26,8 @@ export class ActivityService {
   deleteActivity(id){
     return this.http.post(this.appService.url+":3000/activity/deleteactivity",{id:id});
   }
+
+  addNewActivity(form){
+    return this.http.post(this.appService.url+":3000/activity/addactivity",{form:form});
+  }
 }

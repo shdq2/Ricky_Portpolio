@@ -3,6 +3,7 @@ import {ActivityService} from './activity.service';
 import {CookieService} from 'ngx-cookie-service';
 import {AppService} from './../app.service';
 import {MatDialog, MatDialogRef,MAT_DIALOG_DATA} from '@angular/material/dialog'
+import { iif } from 'rxjs';
 @Component({
   selector: 'app-acitivity',
   templateUrl: './acitivity.component.html',
@@ -30,6 +31,11 @@ export class AcitivityComponent implements OnInit {
 
   notShow = -1;
   updateComplete = false;
+  newActivity = [];
+  errorMsg = "";
+  
+  timeout:any;
+  resetErrMsg:any;
   ngOnInit(): void {
     this.appService.endLoading();
     this.isAdmin = this.appService.isAdmin;
@@ -79,32 +85,7 @@ export class AcitivityComponent implements OnInit {
   changeBtnClick(){
     this.isEdit = !this.isEdit;
     if(!this.isEdit){      
-        // for(var i = 0 ; i < this.changeInfo.actitle.length;i++){          
-        //   if(this.changeInfo.actitle[i]["actitle_title"] != this.activityTitle[i]["actitle_title"]){
-        //     this.activityService.updateActivityTitle(this.changeInfo.actitle[i]["actitle_id"],this.changeInfo.actitle[i]["actitle_title"]).subscribe(updateTitleResult=>{
-        //       console.log(updateTitleResult)
-        //     })
-        //     console.log(i+"번째가 다름");
-        //   }
-        // }
-
-        // for(var i = 0 ; i<this.changeInfo.activity.length;i++){
-        //   var isChk = true;
-        //   for(var j = 0 ; j < this.activityKeyList.length;j++){
-        //     if(this.changeInfo.activity[i][this.activityKeyList[j]] != this.activityData[i][this.activityKeyList[j]]){              
-        //       isChk = false;              
-        //       break;
-        //     }
-        //   }
-        //   if(!isChk){
-        //     var date =new Date( this.changeInfo.activity[i].activity_date);
-        //     this.changeInfo.activity[i].activity_date = date.getFullYear() + "."+(date.getMonth()+1)+ "."+ date.getDate();
-        //     this.activityService.updateActivity(this.changeInfo.activity[i]).subscribe(updateAcitvity=>{
-        //       console.log(updateAcitvity);
-        //     })
-        //     console.log(i+"번째 update문 실행");
-        //   }
-        // }
+        this.newActivity = [];
         this.getActivityTitle();
     }
   }  
@@ -112,21 +93,10 @@ export class AcitivityComponent implements OnInit {
     if(this.changeInfo.actitle[this.selectIdx]["actitle_title"] != this.activityTitle[this.selectIdx]["actitle_title"]){      
       this.activityService.updateActivityTitle(this.changeInfo.actitle[this.selectIdx]["actitle_id"],this.changeInfo.actitle[this.selectIdx]["actitle_title"]).subscribe(updateTitleResult=>{
         this.activityTitle[this.selectIdx]["actitle_title"] = this.changeInfo.actitle[this.selectIdx]["actitle_title"];
-        this.notShow = 0;
-
-        this.updateComplete = true;
-        setTimeout(()=>{
-          this.updateComplete = false; 
-          this.notShow = -1;         
-        },1500);
+        this.viewResultLogo(0);
       })
     }else{
-      this.notShow = 1;
-      this.updateComplete = true;
-      setTimeout(()=>{
-        this.updateComplete = false; 
-        this.notShow = -1;         
-      },1500);
+      this.viewResultLogo(1);
     }
   }
   deleteActivity(activity,idx){
@@ -140,6 +110,7 @@ export class AcitivityComponent implements OnInit {
         console.log(this.changeInfo.activity[idx]);
         this.activityService.deleteActivity(this.changeInfo.activity[idx].activity_id).subscribe(result=>{
           this.changeInfo.activity.splice(idx);
+          this.viewResultLogo(2);
         })
         
       }      
@@ -155,28 +126,88 @@ export class AcitivityComponent implements OnInit {
     }
     if(isChk){
       var date =new Date( this.changeInfo.activity[idx].activity_date);
-      this.changeInfo.activity[idx].activity_date = date.getFullYear() + "."+(date.getMonth()+1)+ "."+ date.getDate();
+      this.changeInfo.activity[idx].activity_date = new Date(date.getFullYear() + "."+(date.getMonth()+1)+ "."+ date.getDate());
       this.activityService.updateActivity(this.changeInfo.activity[idx]).subscribe(updateAcitvity=>{
-        this.notShow = 0;
-        this.updateComplete = true;
-        setTimeout(()=>{
-          this.updateComplete = false; 
-          this.notShow = -1;         
-        },1500);
+        this.viewResultLogo(0);
       })
     }else{
-      this.notShow = 1;
-      this.updateComplete = true;
-      setTimeout(()=>{
-        this.updateComplete = false;          
-        this.notShow = -1;
-      },1500);
-    }
-    console.log(this.changeInfo.activity[0].activity_date);
+      this.viewResultLogo(1);      
+    }    
   }
 
+  viewResultLogo(value){    
+    this.notShow = value;    
+    this.updateComplete = true;
+    if(this.timeout){
+      clearTimeout(this.timeout);
+      clearTimeout(this.resetErrMsg);
+    }
+    this.timeout = setTimeout(()=>{
+      this.updateComplete = false;          
+      this.notShow = -1;
+      
+    },1500);
+    
+    this.resetErrMsg = setTimeout(()=>{
+      this.errorMsg = "";
+    },2000);
+  }
   changeTitle(idx){
     this.selectIdx = idx;
+  }
+
+  addActivity(){
+    this.newActivity.push({
+      activity_title:'',
+      activity_detail:'',
+      activity_date:'',
+      activity_publisher:'',
+      activity_content:'',
+      actitle_id:this.activityTitle[this.selectIdx].actitle_id,
+      info_id:this.cookie.get("user_id")
+    });    
+  }
+  deleteNewActivity(idx){
+    this.newActivity.splice(idx);
+  }
+  addNewActivity(idx){
+    var chk = false;
+    var date = new Date(this.newActivity[idx].activity_date );
+    this.newActivity[idx].activity_date = (new Date(date.getFullYear()+"/"+(date.getMonth()+1)+"/"+date.getDate()));
+    if(this.timeout){
+      this.errorMsg = "";
+    }
+    for(var i = 0 ; i < this.activityKeyList.length;i++){      
+      if(this.newActivity[idx][this.activityKeyList[i]] == "" || this.newActivity[idx][this.activityKeyList[i]] == null ||(this.newActivity[idx][this.activityKeyList[i]] + "").indexOf('Date') != -1){
+        
+        switch(this.activityKeyList[i]){
+          case "activity_title":
+            this.errorMsg += "이름, ";
+          break;
+          case "activity_detail":
+            this.errorMsg += "등급, ";
+          break;
+          case "activity_date":
+            this.errorMsg += "취득 일자, ";
+          break;
+          case "activity_publisher":
+            this.errorMsg += "발급처, ";
+          break;            
+        }        
+        chk = true;
+      }
+    }
+    if(!chk){
+      this.activityService.addNewActivity(this.newActivity[idx]).subscribe(result=>{
+        this.viewResultLogo(0);
+        this.newActivity.splice(idx);
+        this.getActivityTitle();
+      })    
+    }else{
+      this.errorMsg = this.errorMsg.substring(0,this.errorMsg.length-2);      
+      this.viewResultLogo(3);      
+    }
+    console.log(this.newActivity[idx]);
   }
 }
 @Component({

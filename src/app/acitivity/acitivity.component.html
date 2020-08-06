@@ -37,7 +37,8 @@
                 <input type="button" value="수정" class="btn btn-primary" (click)="editTitle()"/>
             </div>
             <hr />
-            <h3> &nbsp; 액티비티 수정 &nbsp;</h3>
+            <h3> &nbsp; 액티비티 수정 &nbsp; <img src="assets/img/plusIcon.png" class="plusIcon" (click)="addActivity()" /></h3>
+            
             <div class="activity_section" >
                 <div *ngFor = "let activity of changeInfo.activity;let idx = index;">
                     <div *ngIf="activity.actitle_id == changeInfo.actitle[selectIdx].actitle_id" class="activity_Item">
@@ -88,6 +89,54 @@
                         <hr />
                     </div>                    
                 </div>
+
+                <div *ngFor = "let activity of newActivity;let idx = index;">                    
+                        <div class="setion">
+                            <div class="col-md-2 col-3 section_item" >
+                                이름
+                            </div>
+                            <div class="col-md-4 col-9 section_item" >
+                                <input type="text" class="form-control" [(ngModel)]="activity.activity_title">
+                            </div>
+                            <div class="col-md-2 col-3 section_item" >
+                                등급
+                            </div>
+                            <div class="col-md-4 col-9 section_item" >
+                                <input type="text" class="form-control"  [(ngModel)]="activity.activity_detail">
+                            </div>
+                        </div>
+                        <div class="setion">
+                            <div class="col-md-2 col-3 section_item" style="font-size:15px;">
+                                취득일자
+                            </div>
+                            <div class="col-md-4 col-9 section_item" >
+                                <mat-form-field appearance="fill">                            
+                                    <input matInput [matDatepicker]="dp4" disabled [(ngModel)]="activity.activity_date" class=" datepick">
+                                    <mat-datepicker-toggle matSuffix [for]="dp4"></mat-datepicker-toggle>
+                                    <mat-datepicker #dp4 disabled="false"></mat-datepicker>                                                                    
+                                 </mat-form-field>
+                            </div>
+                            <div class="col-md-2 col-3 section_item" >
+                                발급처
+                            </div>
+                            <div class="col-md-4 col-9 section_item" >
+                                <input type="text" class="form-control"  [(ngModel)]="activity.activity_publisher">
+                            </div>
+                        </div>
+                        <div class="setion">
+                            <div class="col-md-2 col-3 section_item" >
+                                설명
+                            </div>
+                            <div class="col-md-10 col-9 section_item" >
+                                <input type="text" class="form-control"  [(ngModel)]="activity.activity_content">
+                            </div>                            
+                        </div>
+                        <div class="btn_section" >
+                            <input type="button" class="btn btn-danger" value="삭제" (click)="deleteNewActivity(idx)"/>
+                            <input type="button" class="btn btn-primary" value="추가" (click)="addNewActivity(idx)"/>                            
+                       </div>
+                        <hr />
+                    </div>                                    
             </div>
         </div>
 </div>
@@ -97,4 +146,10 @@
 </div>
 <div class="resultUpdate" [ngClass]="{show:updateComplete == true && notShow == 1}">
     업데이트를 할 내용이 없습니다.
+</div>
+<div class="resultUpdate" [ngClass]="{show:updateComplete == true && notShow == 2}">
+    삭제가 완료되었습니다.
+</div>
+<div class="resultUpdate" [ngClass]="{show:updateComplete == true && notShow == 3}">
+    {{errorMsg}} 항목이 올바르지 않습니다.
 </div>
