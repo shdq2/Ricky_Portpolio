@@ -25,6 +25,10 @@ export class MainService {
     return this.http.post(this.appService.url+":3000/user/editinfo",{id:id,form:form});
   }
 
+  addAbout(form){    
+    return this.http.post(this.appService.url+":3000/user/addinfo",{form:form});
+  }
+
   editCareer(id,form){
     return this.http.post(this.appService.url+":3000/user/editcareer",{id:id,form:form});
   }
@@ -35,5 +39,17 @@ export class MainService {
 
   removeCareer(id){
     return this.http.post(this.appService.url+":3000/user/removecareer",{id:id});
+  }
+
+  updateTitle(id,text){
+    return this.http.post(this.appService.url+":3000/user/updatetitle",{id:id,text:text});
+  }
+
+  addTitle(text,info_id){
+    return this.http.post(this.appService.url+":3000/user/addtitle",{text:text,info_id:info_id});
+  }
+
+  removeTitle(id){
+    return this.http.post(this.appService.url+":3000/user/removetitle",{id:id});
   }
 }

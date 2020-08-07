@@ -282,3 +282,13 @@ img.gotoPortpolio{
     width:50px;
     height:50px;
 }
+
+.editHeader{
+    text-align: center;
+    margin-top:15px;
+}
+.editHeader .editTable input:nth-child(odd) {
+    display: inline-block;
+    width:90%;
+    margin-right:15px;
+}

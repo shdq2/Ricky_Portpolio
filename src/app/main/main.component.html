@@ -1,18 +1,39 @@
 <input type="button" value="수정" class="btn btn-primary EditBtn" (click)="changeBtnClick()" *ngIf="isAdmin == true && isEdit == false" (click)="changeBtnClick(0)"/><input type="button" value="완료" class="btn btn-primary EditBtn" (click)="changeBtnClick(0)" *ngIf="isAdmin == true && isEdit == true" (click)="changeBtnClick()"/> 
-<div class="main_header">
-    <div class="main_message">
+<div class="main_header" *ngIf="isEdit == false">
+    <div class="main_message" >
         <h1 [ngClass]="{idle:cursorToggle == true}" >{{currentTitle}}</h1>        
         <br />
-        <p>I AM PROGRAMER</p>        
+        <p>{{userData.info_littlement}}</p>        
     </div>
+</div>
+<div class="editHeader" *ngIf="isEdit == true">
+    <h2 class="main_title">&lt; Edit Title Tiping &gt;</h2>
+    <table class="table editTable">
+        <tr *ngFor="let titleText of changeTitle;let idx = index;">            
+            <td><input type="text" class="form-control" [(ngModel)]="titleText.title_text"/><input type="button" class="btn btn-danger" value="삭제" (click)="removeTitle(idx,titleText)"/> </td>
+        </tr>
+        
+    </table>   
+
+    <h2  class="main_title" *ngIf="newTitleTiping.length > 0">&lt; Add Tiping Tiping &gt;</h2>
+    <table class="table editTable newTitleTable">
+        <tr *ngFor="let title of newTitleTiping;let idx = index;">
+            <td><input type="text" class="form-control" [(ngModel)]="title.title_text"/><input type="button" class="btn btn-danger" value="삭제" (click)="removeNewTitle(idx);"/> </td>
+        </tr>             
+    </table>  
+    <img src="assets/img/plusIcon.png" (click)="addTiping()"/>    
 </div>
 <div class="main_about main_content">
     <h2 class="main_title">&lt; About Me &gt; </h2>    
-    <img src="./../../assets/img/default.png"/>
+    <input type="file" #img (change)="changeImg(img.files)" style="display:none;"/>
+    
+    <img [src]="changeInfo.userData.info_picture" (click)="clickImg(img)"/>    <br />
+    <input type="button" value="사진 제거" (click)="setDefaultImg()" *ngIf="isEdit == true" class="btn btn-warning"/>
     <div *ngIf="isEdit == false">
         <div class="main_about_name main_about_info">{{userData.info_name}}</div>
         <div class="main_about_name_eng main_about_info">{{userData.info_eng_name}}</div>
         <div class="main_about_name_eng_sub main_about_info">( {{userData.info_nickname}} )</div>
+        
         <br />
         <br />
         <div class="main_about_info" ><img src="https://img.icons8.com/material-outlined/24/000000/new-post.png"/><a href="mailto:{{userData.info_email}}">{{userData.info_email}}</a></div>
@@ -21,6 +42,7 @@
     </div>
     <div *ngIf="isAdmin == true && isEdit == true">
         <table class="table editTable">
+            
             <tr>
                 <td>Name</td>
                 <td><input type="text" class="form-control" [(ngModel)]="changeInfo.userData.info_name"/></td>
@@ -44,6 +66,10 @@
             <tr>
                 <td>Phone Number</td>
                 <td><input type="text" class="form-control" [(ngModel)]="changeInfo.userData.info_phone" /></td>
+            </tr>
+            <tr>
+                <td>Short Explain about me</td>
+                <td><input type="text" class="form-control" [(ngModel)]="changeInfo.userData.info_littlement"/></td>
             </tr>
         </table>        
     </div>

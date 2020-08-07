@@ -21,6 +21,8 @@ export class MainComponent implements OnInit {
   isAdmin = false;
   isEdit = false;
   isEditIdx = -1;
+  isInfo = true;
+  defaultImg = "assets/img/default.png";
   changeInfo = { 
     userData:{
       info_name:"",
@@ -29,7 +31,8 @@ export class MainComponent implements OnInit {
       info_eng_name:'',
       info_phone:'',
       info_git:'',
-      info_littlement:''
+      info_littlement:'',
+      info_picture:this.defaultImg
     },
     career:[]
    };
@@ -40,16 +43,18 @@ export class MainComponent implements OnInit {
     info_eng_name:'',
     info_phone:'',
     info_git:'',
-    info_littlement:''
+    info_littlement:'',
+    info_picture:''
   };
   careerData = [];
   originCareer = [];
   keyList = [];
   careerKeyList = [];
 
-
-
+  changeTitle = [];
+  newTitleTiping = [];
   viewInsert:object[];
+  
   constructor(private mainService:MainService,private router:Router, private cookie:CookieService,private appService:AppService,public dialog:MatDialog) {    
     if(cookie.get("user_id") == ""){
       router.navigate(['login']);
@@ -63,48 +68,100 @@ export class MainComponent implements OnInit {
     this.writeTitle();
   }
 
+  changeImg(files){
+    var file = files[0];
+    var reader = new FileReader();
+    
+    reader.readAsDataURL(file);
+    reader.onload = ()=>{      
+      this.changeInfo.userData.info_picture = reader.result.toString();      
+      
+    }
+  }
+  clickImg(img){
+    if(this.isEdit == false || this.isAdmin == false){
+      return
+    }
+    img.click();    
+  }
+
+  setDefaultImg(){
+    this.changeInfo.userData.info_picture =this.defaultImg;
+  }
   getInfo(){
     this.changeInfo.career=[];
+    this.changeTitle = [];
+    this.TitleText = [];
     var id = this.cookie.get("user_id");
     this.mainService.getUserInfo(id).subscribe(data=>{
-      this.userData = (data as any).result[0];                
-      var originStringData = JSON.stringify(this.userData);
-      var originJsonData = JSON.parse(originStringData);
-      this.keyList = Object.keys(originJsonData);
-      for(var i= 0 ;i<this.keyList.length;i++){        
-        this.changeInfo.userData[this.keyList[i]] = this.userData[this.keyList[i]];        
-      }
-      this.mainService.getCareerInfo(id).subscribe(data=>{        
-        this.careerData = (data as any).result;     
-        
-        var careerStringData = JSON.stringify(this.careerData[0]);
-        var careerJsonData = JSON.parse(careerStringData);
-        this.careerKeyList = Object.keys(careerJsonData);
-        
-        this.appService.endLoading();
-        for(var i = 0 ; i < this.careerData.length;i++){
-          var career={};
-          for(var j = 0 ; j < this.careerKeyList.length;j++){
-            career[this.careerKeyList[j]] = this.careerData[i][this.careerKeyList[j]];
-          }
+      
+      if((data as any).result.length > 0 ){
+        this.userData = (data as any).result[0];                
+        var originStringData = JSON.stringify(this.userData);
+        var originJsonData = JSON.parse(originStringData);
+        this.keyList = Object.keys(originJsonData);
+        for(var i= 0 ;i<this.keyList.length;i++){        
           
-          this.careerData[i].career_startDate = new Date(this.careerData[i].career_startDate).getFullYear()+"."+(new Date(this.careerData[i].career_startDate).getMonth()+1)+"."+new Date(this.careerData[i].career_startDate).getDate()
-          
-          if(this.careerData[i].career_endDate == null){
-            this.careerData[i].career_endDate = "재직중";
+          if(this.keyList[i] == "info_picture"){          
+            if(this.userData[this.keyList[i]] == "" || this.userData[this.keyList[i]] == null){            
+              this.changeInfo.userData[this.keyList[i]] = this.defaultImg;  
+            }else{
+              var url = "";
+              for(var x = 0 ; x < this.userData[this.keyList[i]].data.length;x++){
+                url +=String.fromCharCode(this.userData[this.keyList[i]].data[x]);
+              }
+              this.changeInfo.userData[this.keyList[i]] = url;  
+            }
           }else{
-            this.careerData[i].career_endDate = new Date(this.careerData[i].career_endDate).getFullYear()+"."+(new Date(this.careerData[i].career_endDate).getMonth()+1)+"."+new Date(this.careerData[i].career_endDate).getDate()
+            this.changeInfo.userData[this.keyList[i]] = this.userData[this.keyList[i]];        
+          }        
+          
+        }
+      }else{
+        this.isInfo = false;
+      }
+      
+      this.mainService.getCareerInfo(id).subscribe(data=>{        
+        
+        if((data as any).result.length > 0 ){
+          this.careerData = (data as any).result;     
+        
+          var careerStringData = JSON.stringify(this.careerData[0]);
+          var careerJsonData = JSON.parse(careerStringData);
+          this.careerKeyList = Object.keys(careerJsonData);
+          
+          
+          for(var i = 0 ; i < this.careerData.length;i++){
+            var career={};
+            for(var j = 0 ; j < this.careerKeyList.length;j++){
+              career[this.careerKeyList[j]] = this.careerData[i][this.careerKeyList[j]];
+            }
+            
+            this.careerData[i].career_startDate = new Date(this.careerData[i].career_startDate).getFullYear()+"."+(new Date(this.careerData[i].career_startDate).getMonth()+1)+"."+new Date(this.careerData[i].career_startDate).getDate()
+            
+            if(this.careerData[i].career_endDate == null){
+              this.careerData[i].career_endDate = "재직중";
+            }else{
+              this.careerData[i].career_endDate = new Date(this.careerData[i].career_endDate).getFullYear()+"."+(new Date(this.careerData[i].career_endDate).getMonth()+1)+"."+new Date(this.careerData[i].career_endDate).getDate()
+            }
+  
+            this.changeInfo.career.push(career);          
           }
-
-          this.changeInfo.career.push(career);          
+          
         }
         
         this.mainService.getTitleTiping(id).subscribe(titleData=>{
-          if((titleData as any).err == null){
+          
+          if((titleData as any).err == null){            
             for(var i = 0 ; i <(titleData as any).result.length;i++){              
               this.TitleText.push((titleData as any).result[i].title_text);
+              this.changeTitle.push({
+                title_id:(titleData as any).result[i].title_id,
+                title_text:(titleData as any).result[i].title_text
+              });
             }
-          }
+            this.appService.endLoading();
+          }          
         })
       })  
     })
@@ -146,20 +203,30 @@ export class MainComponent implements OnInit {
     this.isEdit = !this.isEdit;
     
     var isChk = true;    
-    if(!this.isEdit){      
-      
-      for(var i= 0 ;i<this.keyList.length;i++){
-        if(this.changeInfo.userData[this.keyList[i]] == ""){
+    
+    if(!this.isEdit){            
+      for(var i= 0 ;i<this.keyList.length;i++){        
+        if(this.changeInfo.userData[this.keyList[i]] == ""){                              
           this.changeInfo.userData[this.keyList[i]] = this.userData[this.keyList[i]];
         }
-        if(this.changeInfo.userData[this.keyList[i]] != this.userData[this.keyList[i]]){    
+        if(this.changeInfo.userData[this.keyList[i]] != this.userData[this.keyList[i]]){              
+          console.log(this.changeInfo.userData[this.keyList[i]] != this.userData[this.keyList[i]]);
           isChk = false;    
         }
       }
-      
-      if(!isChk){
-        this.mainService.editAbout(this.cookie.get("user_id"),this.changeInfo.userData).subscribe(editAboutData=>{          
+      if(!this.isInfo){      
+        this.changeInfo.userData["info_id"] = this.cookie.get("user_id");
+
+        this.mainService.addAbout(this.changeInfo.userData).subscribe(editAboutData=>{          
+          
         });
+      }      
+      if(!isChk){        
+        if(this.isInfo){
+          this.mainService.editAbout(this.cookie.get("user_id"),this.changeInfo.userData).subscribe(editAboutData=>{          
+            console.log(editAboutData);
+          });
+        }
       }
       
       for(var i = 0 ; i < this.changeInfo.career.length;i++){
@@ -222,11 +289,43 @@ export class MainComponent implements OnInit {
             
           }
         }
+      }      
+      for(var i = 0 ; i < this.TitleText.length;i++){
+        if(this.TitleText[i] != this.changeTitle[i].title_text){
+          this.mainService.updateTitle(this.changeTitle[i].title_id,this.changeTitle[i].title_text).subscribe(data=>{            
+          })
+        }
       }
-      
+
+      for(var i = 0 ; i < this.newTitleTiping.length;i++){
+        if(this.newTitleTiping[i].title_text != ""){
+          this.mainService.addTitle(this.newTitleTiping[i].title_text,this.newTitleTiping[i].info_id).subscribe(data=>{
+            if((data as any).err){
+              console.log(data);
+              return;
+            }
+            
+          })  
+        }
+        
+      }
+      this.newTitleTiping = [];
       this.getInfo();
     }       
     
+  }
+
+  removeTitle(idx,title){
+    this.mainService.removeTitle(title.title_id).subscribe(data=>{
+      console.log(data);
+      if((data as any).err){
+        return;
+      }      
+      this.changeTitle.splice(idx);
+    })    
+  }
+  removeNewTitle(idx){
+    this.newTitleTiping.splice(idx);
   }
   deleteEndDate(id){
     
@@ -234,7 +333,7 @@ export class MainComponent implements OnInit {
   }
 
   deleteNewDate(id){
-    console.log(id);
+    
     this.viewInsert[id]["career_endDate"] = null;      
 }
 
@@ -266,6 +365,13 @@ export class MainComponent implements OnInit {
 
   deleteNewCareer(idx){
     this.viewInsert.splice(idx);    
+  }
+
+  addTiping(){
+    this.newTitleTiping.push({
+      title_text:'',
+      info_id:this.cookie.get("user_id")
+    })
   }
 }
 

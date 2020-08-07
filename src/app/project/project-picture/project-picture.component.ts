@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {AppService} from './../../app.service';
-import {PictureService} from './picture.service';
+import {ProjectService} from './../project.service';
 import { ActivatedRoute } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { ThrowStmt } from '@angular/compiler';
@@ -11,7 +11,7 @@ import { ThrowStmt } from '@angular/compiler';
 })
 export class ProjectPictureComponent implements OnInit {
 
-  defaultImg ="assets/img/icons8-picture-in-picture-96.png";
+  defaultImg ="assets/img/defaultPictureImg.png";
   activeProject={
     imgSrc:this.defaultImg,
     context:""
@@ -22,7 +22,7 @@ export class ProjectPictureComponent implements OnInit {
 
   selectIdx = -1;
   setImgChk = false;
-  constructor(private appService:AppService,private pictureService:PictureService,private acRoute:ActivatedRoute,private cookie:CookieService) {  
+  constructor(private appService:AppService,private pictureService:ProjectService,private acRoute:ActivatedRoute,private cookie:CookieService) {  
     this.appService.endLoading(); 
     var jsonParams = JSON.stringify(this.acRoute.params);
     this.params = JSON.parse(jsonParams)._value;         
@@ -61,7 +61,7 @@ export class ProjectPictureComponent implements OnInit {
   }
   uploadImg(){
     if(!this.setImgChk){
-      return;
+     // return;
     }   
     var uploadData = {
       imgSrc:this.activeProject.imgSrc,
@@ -69,18 +69,18 @@ export class ProjectPictureComponent implements OnInit {
       career_id:this.params.career_id,
       info_id:this.cookie.get("user_id"),
       project_id:this.params.project_id
-    }
-    console.log(this.params.project_id);
+    }    
     
     this.pictureService.uploadImg(uploadData).subscribe(result=>{
       if((result as any).err){
-        
+        console.log(result);
         return;
       }
-      console.log(result);
-      this.activeProject.imgSrc = this.defaultImg;
-      this.activeProject.context = "";
-      this.selectIdx = -1;
+      
+        this.activeProject.imgSrc = this.defaultImg;
+        this.activeProject.context = "";
+        this.selectIdx = -1;
+        
       this.getPictureList();
     })
   }

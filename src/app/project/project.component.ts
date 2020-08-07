@@ -19,6 +19,10 @@ export class ProjectComponent implements OnInit {
   projectKeyList = [];
   newProject = [];
   params;
+  imgSrc;
+  pictureList = [];
+  selectIdx = 0;
+  select_project_idx = -1;
   constructor(private projectService:ProjectService,private acRoute:ActivatedRoute,private modal:NgbModal,private appService: AppService,private cookie:CookieService,private dialog:MatDialog,private router:Router) {
     if(cookie.get("admin")){
       this.isAdmin = true;
@@ -55,8 +59,32 @@ export class ProjectComponent implements OnInit {
     })
   }
 
-  onDetailPicture(){    
+  onDetailPicture(id,idx){    
     this.isModal = !this.isModal;
+    this.select_project_idx = idx;    
+    var data ={
+      project_id:id,
+      career_id:this.params.id
+    };
+    this.projectService.getImgList(data).subscribe(data=>{
+
+      this.pictureList = (data as any).result;
+      
+      for(var i = 0 ; i < this.pictureList.length;i++){
+        var url = "";
+        for(var j = 0 ; j <this.pictureList[i].propic_img.data.length;j++){
+          url += String.fromCharCode(this.pictureList[i].propic_img.data[j]);
+        }            
+        this.pictureList[i].propic_img = url;      
+      }
+      console.log(this.pictureList);
+      this.imgSrc = this.pictureList[0].propic_img;
+    })
+    
+  }
+
+  changeImg(idx){
+    this.selectIdx = idx;
   }
   changeBtnClick(){
     this.isEdit = !this.isEdit;
@@ -136,10 +164,10 @@ export class ProjectComponent implements OnInit {
       this.newProject.splice(idx);        
       project.project_endDate = new Date(project.project_endDate);
       project.project_startDate = new Date(project.project_startDate);
-      this.changeInfo.push(project);
+      this.getProjectList();      
     })
   }
-  addPicture(idx){
+  addPicture(idx){    
    this.router.navigate(['/project_picture',this.params.id,this.projectList[idx].project_id]) ;
   }
 }

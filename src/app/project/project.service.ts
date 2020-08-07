@@ -23,4 +23,22 @@ export class ProjectService {
   addProject(form){
     return this.http.post(this.appService.url+":3000/project/addproject",{form:form});
   }
+
+
+  uploadImg(form){
+    return this.http.post(this.appService.url+":3000/project/insertimg",{form:form})
+  }
+
+  getImgList(params){    
+    return this.http.get(this.appService.url+":3000/project/getimglist?project_id="+params.project_id+"&career_id="+params.career_id);
+  }
+
+  editPicture(form){
+    return this.http.post(this.appService.url+":3000/project/editpicture",{form:form});
+  }
+
+  deletePicture(id){
+    
+    return this.http.post(this.appService.url+":3000/project/deletepicture",{id:id});
+  }
 }
