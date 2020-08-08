@@ -182,6 +182,7 @@ export class MainComponent implements OnInit {
         }else{
           this.appService.endLoading();
         }
+        this.appService.user_id = this.cookie.get("user_id");
       }          
     })
   }

@@ -21,7 +21,7 @@
 </div>
 <div class="topBar view" *ngIf="viewService.EndLoading == true">
   <div class="header" *ngIf="viewService.EndLoading == true">
-      <a class="header_item" [routerLink]="['/main']">Main</a>
+      <a class="header_item" [routerLink]="['/main',viewService.user_id]">Main</a>
       <a class="header_bar">|</a>
       <a class="header_item" [routerLink]="['/activity']">Acitivity</a>
       <!-- <a class="header_bar">|</a>

@@ -8,12 +8,14 @@ import {CookieService} from 'ngx-cookie-service';
 })
 export class AppComponent {
   title = 'portpolio';
+  
   viewService;
   loginForm={
     id:'',
     pw:''
   }
   constructor(private appService:AppService,private cookie:CookieService){
+    
     this.viewService = appService;
     if(cookie.get("admin") == "true"){
       appService.isAdmin = true;      

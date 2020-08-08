@@ -11,6 +11,7 @@ export class AppService {
   EndLoading = false;
   isAdmin =false;
   url;
+  user_id;
   constructor(private acRouter:ActivatedRoute,private http:HttpClient,private cookie:CookieService) {     
     var urlData = window.location.href.substring(0,window.location.href.lastIndexOf(":"));
     this.url = urlData;    
