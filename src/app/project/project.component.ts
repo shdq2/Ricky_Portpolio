@@ -23,6 +23,9 @@ export class ProjectComponent implements OnInit {
   pictureList = [];
   selectIdx = 0;
   select_project_idx = -1;
+
+  isLarge = false;
+  selectLargePicture;
   constructor(private projectService:ProjectService,private acRoute:ActivatedRoute,private modal:NgbModal,private appService: AppService,private cookie:CookieService,private dialog:MatDialog,private router:Router) {
     if(cookie.get("admin")){
       this.isAdmin = true;
@@ -62,6 +65,7 @@ export class ProjectComponent implements OnInit {
   onDetailPicture(id,idx){    
     this.isModal = !this.isModal;
     this.select_project_idx = idx;    
+    this.selectIdx = 0;
     var data ={
       project_id:id,
       career_id:this.params.id
@@ -76,14 +80,14 @@ export class ProjectComponent implements OnInit {
           url += String.fromCharCode(this.pictureList[i].propic_img.data[j]);
         }            
         this.pictureList[i].propic_img = url;      
-      }
-      console.log(this.pictureList);
+      }      
       this.imgSrc = this.pictureList[0].propic_img;
     })
     
   }
 
   changeImg(idx){
+    console.log(idx);
     this.selectIdx = idx;
   }
   changeBtnClick(){
@@ -104,6 +108,11 @@ export class ProjectComponent implements OnInit {
         })        
       }      
     })
+  }
+
+  largePicture(){
+    this.isLarge = !this.isLarge;
+    console.log(this.isLarge);
   }
 
   editProject(project,idx){

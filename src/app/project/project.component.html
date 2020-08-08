@@ -8,7 +8,7 @@
                 <h3 class="project_title">{{project.project_name}}</h3>
                 <div class="project_account">{{project.project_account}}</div>
                 <div class="project_date">{{project.project_startDate | date:"yyyy-MM"}} ~ {{project.project_endDate | date:"yyyy-MM"}}</div>
-                <div class="project_explanation">{{project.project_explanation}}</div>
+                <!-- <div class="project_explanation">{{project.project_explanation}}</div> -->
                 <hr />
             </div>
         </div>    
@@ -25,20 +25,32 @@
           </button>
         </div>
         <div class="modal-body">
-            <div class="imgListTarget"  *ngIf="pictureList.length>0">
-                <div class="imgTarget" *ngFor="let picture of pictureList;let idx = index;" [ngClass]="{active:selectIdx == idx}" (click)="changeImg(idx)"></div>
-            </div>
-          <img [src]="pictureList[selectIdx].propic_img" *ngIf="pictureList.length>0"/>
-          <img src="assets/img/defaultPictureImg.png" *ngIf="pictureList.length==0"/>
+
+            <div class="imgListTarget"  >
+                <div class="imgTarget"  (click)="changeImg(idx)" [ngClass]="{active:selectIdx == 0}" (click)="changeImg(0)"></div>
+                <div *ngIf="pictureList.length > 0 " style="display:inline-block;">
+                    <div class="imgTarget" *ngFor="let picture of pictureList;let idx = index;" [ngClass]="{active:selectIdx == idx+1}" (click)="changeImg(idx+1)"></div>
+                </div>
+                
+            </div>            
+          <img [src]="pictureList[selectIdx-1].propic_img" *ngIf="selectIdx != 0" (click)="largePicture()"/>  
+          <div *ngIf = "selectIdx == 0" style="white-space: pre-wrap;padding-top:25px;word-break:keep-all;">              
+            {{projectList[select_project_idx].project_explanation}}
+          </div>        
         </div>
-        <div class="modal-footer" *ngIf="pictureList.length>0" >
-            {{pictureList[selectIdx].propic_content}}
+        <div class="modal-footer"  >
+            <div *ngIf="pictureList.length>0 && selectIdx != 0" >
+                {{pictureList[selectIdx -1].propic_content}}
+            </div>
+            
         </div>
       </div>
     </div>
   </div>
 </div>
- 
+ <div class="LargePictureView" *ngIf="selectIdx != 0 && isLarge == true" (click) = "largePicture()">
+    <img [src]="pictureList[selectIdx-1].propic_img" />
+ </div>
 <div *ngIf="isEdit == true">  
   <div class="project_admin_content_section">
       <h3> &nbsp; project 수정 &nbsp; <img src="assets/img/plusIcon.png" class="plusIcon" (click)="addproject()" /></h3>
@@ -86,7 +98,10 @@
                           설명
                       </div>
                       <div class="col-md-10 col-9 section_item" >
-                          <input type="text" class="form-control"  [(ngModel)]="project.project_explanation">
+                          <textarea [(ngModel)]="project.project_explanation" style="resize:none;" class="form-control" rows="5">
+
+                          </textarea>
+                          <!-- <input type="text" class="form-control"  [(ngModel)]="project.project_explanation"> -->
                       </div>                            
                   </div>
                   <div class="btn_section" >
@@ -142,7 +157,9 @@
                         설명
                     </div>
                     <div class="col-md-10 col-9 section_item" >
-                        <input type="text" class="form-control"  [(ngModel)]="project.project_explanation">
+                        <textarea [(ngModel)]="project.project_explanation" style="resize:none;" class="form-control" rows="5">
+
+                        </textarea>                        
                     </div>                            
                 </div>
                 <div class="btn_section" >

@@ -13,11 +13,18 @@ const cors = require('cors');
 //var cookie = require('cookie-parser');
 
 app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended:false }));
+app.use(bodyParser.json({limit:"50mb"}));
+app.use(bodyParser.urlencoded({ limit:"50mb",extended:false }));
 //app.use(cookie());
 app.use(express.static(path.join(__dirname,'../dist')));
+app.use(express.json({
+    limit:"50mb"
+}));
 
+app.use(express.urlencoded({
+    limit:"50mb",
+    extended:false
+}));
  var mysql_dbc = require('./database/db')();
  var connection = mysql_dbc.init();
  mysql_dbc.test_open(connection);

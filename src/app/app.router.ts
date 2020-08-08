@@ -7,7 +7,7 @@ import { ProjectPictureComponent } from './project/project-picture/project-pictu
 
 const AppRoutes: Routes = [  
   { path: '', redirectTo: '/login', pathMatch: 'full' }, // 첫 화면을 login 페이지로 설정  
-  { path: 'main', component: MainComponent, }, // url 경로가 /main 일때 MainComponent를 보여준다.
+  { path: 'main/:user_id', component: MainComponent, }, // url 경로가 /main 일때 MainComponent를 보여준다.
   { path: 'activity', component: AcitivityComponent, }, // url 경로가 /main 일때 MainComponent를 보여준다.
   { path: 'project/:id', component: ProjectComponent, }, // url 경로가 /main 일때 MainComponent를 보여준다.
   { path: 'project_picture/:career_id/:project_id', component: ProjectPictureComponent, }, // url 경로가 /main 일때 MainComponent를 보여준다.

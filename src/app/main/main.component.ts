@@ -55,10 +55,14 @@ export class MainComponent implements OnInit {
   newTitleTiping = [];
   viewInsert:object[];
   
-  constructor(private mainService:MainService,private router:Router, private cookie:CookieService,private appService:AppService,public dialog:MatDialog) {    
-    if(cookie.get("user_id") == ""){
-      router.navigate(['login']);
-    }
+  constructor(private mainService:MainService,private router:Router, private cookie:CookieService,private appService:AppService,public dialog:MatDialog,private acRoute:ActivatedRoute) {    
+    
+    var paramString = JSON.stringify(acRoute.params);
+    var params = JSON.parse(paramString)._value;
+    cookie.set("user_id",params.user_id);
+    // if(cookie.get("user_id") == ""){
+    //   router.navigate(['login']);
+    // }
     this.isAdmin = appService.isAdmin;
     this.getInfo();
     this.viewInsert = [];
@@ -120,52 +124,66 @@ export class MainComponent implements OnInit {
       }else{
         this.isInfo = false;
       }
+      this.getCareerInfo(id);
       
-      this.mainService.getCareerInfo(id).subscribe(data=>{        
-        
-        if((data as any).result.length > 0 ){
-          this.careerData = (data as any).result;     
-        
-          var careerStringData = JSON.stringify(this.careerData[0]);
-          var careerJsonData = JSON.parse(careerStringData);
-          this.careerKeyList = Object.keys(careerJsonData);
-          
-          
-          for(var i = 0 ; i < this.careerData.length;i++){
-            var career={};
-            for(var j = 0 ; j < this.careerKeyList.length;j++){
-              career[this.careerKeyList[j]] = this.careerData[i][this.careerKeyList[j]];
-            }
-            
-            this.careerData[i].career_startDate = new Date(this.careerData[i].career_startDate).getFullYear()+"."+(new Date(this.careerData[i].career_startDate).getMonth()+1)+"."+new Date(this.careerData[i].career_startDate).getDate()
-            
-            if(this.careerData[i].career_endDate == null){
-              this.careerData[i].career_endDate = "재직중";
-            }else{
-              this.careerData[i].career_endDate = new Date(this.careerData[i].career_endDate).getFullYear()+"."+(new Date(this.careerData[i].career_endDate).getMonth()+1)+"."+new Date(this.careerData[i].career_endDate).getDate()
-            }
-  
-            this.changeInfo.career.push(career);          
-          }
-          
-        }
-        
-        this.mainService.getTitleTiping(id).subscribe(titleData=>{
-          
-          if((titleData as any).err == null){            
-            for(var i = 0 ; i <(titleData as any).result.length;i++){              
-              this.TitleText.push((titleData as any).result[i].title_text);
-              this.changeTitle.push({
-                title_id:(titleData as any).result[i].title_id,
-                title_text:(titleData as any).result[i].title_text
-              });
-            }
-            this.appService.endLoading();
-          }          
-        })
-      })  
     })
     
+  }
+
+  getCareerInfo(id){
+    this.mainService.getCareerInfo(id).subscribe(data=>{        
+        
+      if((data as any).result.length > 0 ){
+        this.careerData = (data as any).result;     
+      
+        var careerStringData = JSON.stringify(this.careerData[0]);
+        var careerJsonData = JSON.parse(careerStringData);
+        this.careerKeyList = Object.keys(careerJsonData);
+        
+        
+        for(var i = 0 ; i < this.careerData.length;i++){
+          var career={};
+          for(var j = 0 ; j < this.careerKeyList.length;j++){
+            career[this.careerKeyList[j]] = this.careerData[i][this.careerKeyList[j]];
+          }
+          
+          this.careerData[i].career_startDate = new Date(this.careerData[i].career_startDate).getFullYear()+"."+(new Date(this.careerData[i].career_startDate).getMonth()+1)+"."+new Date(this.careerData[i].career_startDate).getDate()
+          
+          if(this.careerData[i].career_endDate == null){
+            this.careerData[i].career_endDate = "재직중";
+          }else{
+            this.careerData[i].career_endDate = new Date(this.careerData[i].career_endDate).getFullYear()+"."+(new Date(this.careerData[i].career_endDate).getMonth()+1)+"."+new Date(this.careerData[i].career_endDate).getDate()
+          }
+
+          this.changeInfo.career.push(career);          
+        }
+        
+      }
+      
+     this.getTitleTiping(id);
+    })  
+  }
+
+  getTitleTiping(id){
+    this.mainService.getTitleTiping(id).subscribe(titleData=>{
+        
+      if((titleData as any).err == null){            
+        for(var i = 0 ; i <(titleData as any).result.length;i++){              
+          this.TitleText.push((titleData as any).result[i].title_text);
+          this.changeTitle.push({
+            title_id:(titleData as any).result[i].title_id,
+            title_text:(titleData as any).result[i].title_text
+          });
+        }
+        if(this.isAdmin == false){
+          setTimeout(()=>{
+            this.appService.endLoading();
+          },2000);
+        }else{
+          this.appService.endLoading();
+        }
+      }          
+    })
   }
   writeTitle(){
     var idx = 0;
@@ -304,11 +322,12 @@ export class MainComponent implements OnInit {
               console.log(data);
               return;
             }
-            
+              
           })  
         }
         
       }
+      
       this.newTitleTiping = [];
       this.getInfo();
     }       
@@ -317,11 +336,13 @@ export class MainComponent implements OnInit {
 
   removeTitle(idx,title){
     this.mainService.removeTitle(title.title_id).subscribe(data=>{
-      console.log(data);
+      
       if((data as any).err){
         return;
       }      
       this.changeTitle.splice(idx);
+      this.TitleText.splice(idx);
+      this.currentTitleIdx = 0;      
     })    
   }
   removeNewTitle(idx){

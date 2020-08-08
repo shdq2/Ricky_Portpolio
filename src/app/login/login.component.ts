@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
           this.appService.SuccessLogin();
           this.isChk = false;
           setTimeout(()=>{
-            this.router.navigate(['main']);
+            this.router.navigate(['main',this.loginForm.id]);
           },3000)
           
         }else{
@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
           this.appService.isAdmin = true;
           this.cookie.set('user_id',this.loginForm.id,1);
           this.cookie.set('admin',"true");
-          this.router.navigate(['main']);
+          this.router.navigate(['main',this.loginForm.id]);
         }else{
           alert("data Error");
         }        
