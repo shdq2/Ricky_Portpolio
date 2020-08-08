@@ -69,7 +69,7 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit(): void {    
-    this.writeTitle();
+    
   }
 
   changeImg(files){
@@ -183,27 +183,30 @@ export class MainComponent implements OnInit {
           this.appService.endLoading();
         }
         this.appService.user_id = this.cookie.get("user_id");
+        this.writeTitle();
       }          
     })
   }
   writeTitle(){
     var idx = 0;
-    var interval = setInterval(()=>{      
-    this.currentTitle = this.TitleText[this.currentTitleIdx].substring(0,idx);
-    if(idx < this.TitleText[this.currentTitleIdx].length){
-      idx++;
-    }else{          
-      this.cursorToggle = !this.cursorToggle;    
-      this.currentTitleIdx++;
-      if(this.currentTitleIdx == this.TitleText.length){
-        this.currentTitleIdx = 0;
-      }
-      clearInterval(interval);
-      setTimeout(()=>{
-        this.deleteTitle();
-      },3000);
-    }
-    },200);
+    if(this.TitleText.length > 0){
+      var interval = setInterval(()=>{      
+        this.currentTitle = this.TitleText[this.currentTitleIdx].substring(0,idx);
+        if(idx < this.TitleText[this.currentTitleIdx].length){
+          idx++;
+        }else{          
+          this.cursorToggle = !this.cursorToggle;    
+          this.currentTitleIdx++;
+          if(this.currentTitleIdx == this.TitleText.length){
+            this.currentTitleIdx = 0;
+          }
+          clearInterval(interval);
+          setTimeout(()=>{
+            this.deleteTitle();
+          },3000);
+        }
+        },200);
+    }    
   }
   deleteTitle(){
     var interval = setInterval(()=>{
