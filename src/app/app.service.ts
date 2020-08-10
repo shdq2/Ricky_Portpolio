@@ -23,8 +23,7 @@ export class AppService {
     this.isLoading = true;    
   } 
   endLoading(){
-    this.EndLoading = true; 
-    console.log("test");   
+    this.EndLoading = true;    
   }
 
   clearCache(){

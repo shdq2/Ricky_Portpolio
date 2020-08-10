@@ -27,8 +27,16 @@
         <div class="activity_admin_top_section">
             <div *ngFor="let title of changeInfo.actitle;let idx = index" class="title active" (click)="changeTitle(idx)" [ngClass]="{active:selectIdx == idx}" >
                 {{title.actitle_title}}                
-            </div>
-            
+            </div>            
+        </div>
+        <div class="input_section" style="height:100px;text-align: left;padding-left:20px;">
+            <h3> &nbsp; 타이틀 추가 &nbsp;</h3>
+            <input type="text" class="form-control" style="width:60%;display:inline-block;" [(ngModel)] = "newActivityTitle.actitle_title"/>
+            <input type="button" value="추가" class="btn btn-primary" (click)="addActivityTitle()"/>
+        </div>
+        <div class="input_section" style="height:100px;text-align: left;padding-left:20px;">
+            <h3> &nbsp; 타이틀 삭제 &nbsp;</h3>            
+            <input type="button" value="삭제" class="btn btn-danger" (click)="removeActivityTitle()"/>
         </div>
         <div class="activity_admin_content_section">
             <h3> &nbsp; 타이틀 수정 &nbsp;</h3>

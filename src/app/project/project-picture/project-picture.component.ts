@@ -11,7 +11,7 @@ import { ThrowStmt } from '@angular/compiler';
 })
 export class ProjectPictureComponent implements OnInit {
 
-  defaultImg ="assets/img/defaultPictureImg.png";
+  defaultImg ="assets/img/defaultPictureImg.jpg";
   activeProject={
     imgSrc:this.defaultImg,
     context:""
@@ -26,7 +26,7 @@ export class ProjectPictureComponent implements OnInit {
     this.appService.endLoading(); 
     var jsonParams = JSON.stringify(this.acRoute.params);
     this.params = JSON.parse(jsonParams)._value;         
-    
+    appService.user_id = cookie.get("user_id");   
    }
 
   

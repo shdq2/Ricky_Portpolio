@@ -2,7 +2,7 @@ import { Component, OnInit,Inject } from '@angular/core';
 import {ActivityService} from './activity.service';
 import {CookieService} from 'ngx-cookie-service';
 import {AppService} from './../app.service';
-import {MatDialog, MatDialogRef,MAT_DIALOG_DATA} from '@angular/material/dialog'
+import {MatDialog, MatDialogRef,MAT_DIALOG_DATA, throwMatDialogContentAlreadyAttachedError} from '@angular/material/dialog'
 import { iif } from 'rxjs';
 @Component({
   selector: 'app-acitivity',
@@ -12,7 +12,7 @@ import { iif } from 'rxjs';
 export class AcitivityComponent implements OnInit {
 
   constructor(private activityService:ActivityService,private cookie:CookieService,private appService:AppService,public dialog:MatDialog) {
-
+    appService.user_id = cookie.get("user_id");    
   }
   isAdmin = false;
   isEdit = false;
@@ -36,10 +36,17 @@ export class AcitivityComponent implements OnInit {
   
   timeout:any;
   resetErrMsg:any;
+
+  newActivityTitle ={
+    actitle_title:'',
+    info_id:''
+  };
+  selectTitleId = 0;
   ngOnInit(): void {
     this.appService.endLoading();
     this.isAdmin = this.appService.isAdmin;
     this.getActivityTitle();
+    
   }
   getActivityTitle(){
     this.changeInfo.activity = [];
@@ -81,7 +88,29 @@ export class AcitivityComponent implements OnInit {
         
     });
   }
+  addActivityTitle(){
+    this.newActivityTitle.info_id = this.cookie.get("user_id");
+    
+    this.activityService.addTitle(this.newActivityTitle).subscribe(data=>{
+      if((data as any).err){
+        console.log((data as any).err);
+        return;
+      }
+      this.newActivityTitle.actitle_title = "";
+      this.getActivityTitle();
+    })
+  }
+  removeActivityTitle(){
+    this.activityService.removeTitle(this.changeInfo.actitle[this.selectIdx].actitle_id).subscribe(data=>{
+      if((data as any).err){
+        console.log((data as any).err);
+        return;
+      }
+      this.getActivityTitle();
+      this.selectIdx = 0;
 
+    })
+  }
   changeBtnClick(){
     this.isEdit = !this.isEdit;
     if(!this.isEdit){      

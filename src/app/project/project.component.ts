@@ -28,6 +28,7 @@ export class ProjectComponent implements OnInit {
   selectLargePicture;
   isPictureLoading = false;
   constructor(private projectService:ProjectService,private acRoute:ActivatedRoute,private modal:NgbModal,private appService: AppService,private cookie:CookieService,private dialog:MatDialog,private router:Router) {
+    appService.user_id = cookie.get("user_id");    
     if(cookie.get("admin")){
       this.isAdmin = true;
     }

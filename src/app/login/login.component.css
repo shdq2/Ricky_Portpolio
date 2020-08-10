@@ -4,7 +4,7 @@
     left:50%;
     top:50%;
     transform:translate(-50%,-50%);
-    z-index:99;
+    z-index:1070;
     background-color:#1a1a1a;
     /* border-top-left-radius: 2rem;
     border-top-right-radius: 2rem; */

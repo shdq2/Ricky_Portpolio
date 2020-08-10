@@ -27,6 +27,7 @@
 }
 .display{
     display:inline-block;
+    max-width:450px;
 }
 
 .imgListContainer{

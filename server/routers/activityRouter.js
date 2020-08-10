@@ -26,6 +26,53 @@ router.get('/getTitle',function(req,res){
         res.json(resultJson);
     })
 })
+
+router.post('/addtitle',function(req,res){    
+    if(connection == null){
+        connection = mysql_dbc.get();
+    }    
+    var data = req.body.form;    
+    var resultJson = {};    
+    
+    var stmt = 'insert into activityTitle(info_id,actitle_title) values("'+data.info_id+'","'+data.actitle_title+'")';        
+    connection.query(stmt, function (err, result) {
+        if(err) {     
+            resultJson.id = data.id;       
+            resultJson.err = err;            
+            // res.json(err);
+        }else{
+            resultJson.id = data.id;       
+            resultJson.result = result;            
+            //   res.json(result);
+        }   
+        
+        res.json(resultJson);
+    })
+})
+
+
+router.post('/removetitle',function(req,res){    
+    if(connection == null){
+        connection = mysql_dbc.get();
+    }    
+    var data = req.body;    
+    var resultJson = {};        
+    var stmt = 'delete from activityTitle where actitle_id = "'+data.id+'"';        
+    connection.query(stmt, function (err, result) {
+        if(err) {     
+            resultJson.id = data.id;       
+            resultJson.err = err;            
+            // res.json(err);
+        }else{
+            resultJson.id = data.id;       
+            resultJson.result = result;            
+            //   res.json(result);
+        }   
+        
+        res.json(resultJson);
+    })
+})
+
 router.get('/getActivity',function(req,res){    
     if(connection == null){
         connection = mysql_dbc.get();

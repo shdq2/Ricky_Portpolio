@@ -30,4 +30,12 @@ export class ActivityService {
   addNewActivity(form){
     return this.http.post(this.appService.url+":3000/activity/addactivity",{form:form});
   }
+  
+  addTitle(form){
+    return this.http.post(this.appService.url+":3000/activity/addtitle",{form:form});
+  }
+
+  removeTitle(id){
+    return this.http.post(this.appService.url+":3000/activity/removetitle",{id:id});
+  }
 }
