@@ -167,7 +167,7 @@ router.post('/editinfo',function(req,res){
     }    
     var data = req.body;    
     var resultJson = {};        
-    var stmt = 'update infomation set info_littlement = "'+data.form.info_littlement+'",info_name="'+data.form.info_name+'",info_eng_name="'+data.form.info_eng_name+'",info_nickname="'+data.form.info_nickname+'",info_email="'+data.form.info_email+'",info_phone="'+data.form.info_phone+'",info_git="'+data.form.info_git+'",info_picture="'+data.form.info_picture+'" where info_id = "'+data.id+'"';    
+    var stmt = 'update infomation set info_littlement = "'+data.form.info_littlement+'",info_name="'+data.form.info_name+'",info_eng_name="'+data.form.info_eng_name+'",info_nickname="'+data.form.info_nickname+'",info_email="'+data.form.info_email+'",info_phone="'+data.form.info_phone+'",info_git="'+data.form.info_git+'",info_picture="'+data.form.info_picture+'",info_university="'+data.form.info_university+'",info_subject="'+data.form.info_subject+'" where info_id = "'+data.id+'"';    
     connection.query(stmt, function (err, result) {
         if(err) {     
             resultJson.id = data.id;       
@@ -189,7 +189,7 @@ router.post('/addinfo',function(req,res){
     }    
     var data = req.body;    
     var resultJson = {};        
-    var stmt = 'insert into infomation(info_id,info_name,info_eng_name,info_nickname,info_email,info_phone,info_git, info_littlement,info_picture) values("'+data.form.info_id+'","'+data.form.info_name+'","'+data.form.info_eng_name+'","'+data.form.info_nickname+'","'+data.form.info_email+'","'+data.form.info_phone+'","'+data.form.info_git+'","'+data.form.info_littlement+'","'+data.form.info_picture+'")';
+    var stmt = 'insert into infomation(info_id,info_name,info_eng_name,info_nickname,info_email,info_phone,info_git, info_littlement,info_picture,info_university,info_subject) values("'+data.form.info_id+'","'+data.form.info_name+'","'+data.form.info_eng_name+'","'+data.form.info_nickname+'","'+data.form.info_email+'","'+data.form.info_phone+'","'+data.form.info_git+'","'+data.form.info_littlement+'","'+data.form.info_picture+'","'+data.form.info_university+'","'+data.form.info_subject+'")';
     
     connection.query(stmt, function (err, result) {
         if(err) {     

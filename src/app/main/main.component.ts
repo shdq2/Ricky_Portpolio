@@ -32,7 +32,9 @@ export class MainComponent implements OnInit {
       info_phone:'',
       info_git:'',
       info_littlement:'',
-      info_picture:this.defaultImg
+      info_picture:this.defaultImg,
+      info_university:'',
+      info_subject:''
     },
     career:[]
    };
@@ -44,7 +46,9 @@ export class MainComponent implements OnInit {
     info_phone:'',
     info_git:'',
     info_littlement:'',
-    info_picture:''
+    info_picture:'',
+    info_university:'',
+    info_subject:''
   };
   careerData = [];
   originCareer = [];

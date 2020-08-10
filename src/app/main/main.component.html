@@ -39,10 +39,13 @@
         <div class="main_about_info" ><img src="https://img.icons8.com/material-outlined/24/000000/new-post.png"/><a href="mailto:{{userData.info_email}}">{{userData.info_email}}</a></div>
         <div class="main_about_info"><img src="https://img.icons8.com/material-rounded/24/000000/github.png"/><a href="https://github.com/{{userData.info_git}}">{{userData.info_git}}</a></div>
         <div class="main_about_info"><img src="https://img.icons8.com/material-rounded/24/000000/smartphone-approve.png"/>{{userData.info_phone}}</div>
+        <br />
+        <br />
+        <div class="main_about_info main_about_name">{{userData.info_university}}</div>
+        <div class="main_about_info">&lt; {{userData.info_subject}} &gt;</div>
     </div>
     <div *ngIf="isAdmin == true && isEdit == true">
-        <table class="table editTable">
-            
+        <table class="table editTable">            
             <tr>
                 <td>Name</td>
                 <td><input type="text" class="form-control" [(ngModel)]="changeInfo.userData.info_name"/></td>
@@ -70,6 +73,14 @@
             <tr>
                 <td>Short Explain about me</td>
                 <td><input type="text" class="form-control" [(ngModel)]="changeInfo.userData.info_littlement"/></td>
+            </tr>
+            <tr>
+                <td>University</td>
+                <td><input type="text" class="form-control" [(ngModel)]="changeInfo.userData.info_university"/></td>
+            </tr>
+            <tr>
+                <td>Major</td>
+                <td><input type="text" class="form-control" [(ngModel)]="changeInfo.userData.info_subject"/></td>
             </tr>
         </table>        
     </div>
