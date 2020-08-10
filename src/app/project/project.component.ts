@@ -26,6 +26,7 @@ export class ProjectComponent implements OnInit {
 
   isLarge = false;
   selectLargePicture;
+  isPictureLoading = false;
   constructor(private projectService:ProjectService,private acRoute:ActivatedRoute,private modal:NgbModal,private appService: AppService,private cookie:CookieService,private dialog:MatDialog,private router:Router) {
     if(cookie.get("admin")){
       this.isAdmin = true;
@@ -64,30 +65,41 @@ export class ProjectComponent implements OnInit {
 
   onDetailPicture(id,idx){    
     this.isModal = !this.isModal;
-    this.select_project_idx = idx;    
-    this.selectIdx = 0;
+    
+    if(!this.isModal){
+      this.isPictureLoading = false;
+    }else{
+      this.select_project_idx = idx;    
+      this.selectIdx = 0;
     var data ={
       project_id:id,
       career_id:this.params.id
     };
-    this.projectService.getImgList(data).subscribe(data=>{
-
+    
+    this.projectService.getImgList(data).subscribe(data=>{      
       this.pictureList = (data as any).result;
-      
-      for(var i = 0 ; i < this.pictureList.length;i++){
-        var url = "";
-        for(var j = 0 ; j <this.pictureList[i].propic_img.data.length;j++){
-          url += String.fromCharCode(this.pictureList[i].propic_img.data[j]);
-        }            
-        this.pictureList[i].propic_img = url;      
+      if(this.pictureList.length>0){
+        for(var i = 0 ; i < this.pictureList.length;i++){
+          var url = "";
+          for(var j = 0 ; j <this.pictureList[i].propic_img.data.length;j++){
+            url += String.fromCharCode(this.pictureList[i].propic_img.data[j]);
+          }            
+          this.pictureList[i].propic_img = url;      
+        }      
+        
+        this.imgSrc = this.pictureList[0].propic_img;
       }      
-      this.imgSrc = this.pictureList[0].propic_img;
+      this.isPictureLoading = true;
+      
+      
     })
+    
+    }
+    
     
   }
 
-  changeImg(idx){
-    console.log(idx);
+  changeImg(idx){    
     this.selectIdx = idx;
   }
   changeBtnClick(){
@@ -111,8 +123,7 @@ export class ProjectComponent implements OnInit {
   }
 
   largePicture(){
-    this.isLarge = !this.isLarge;
-    console.log(this.isLarge);
+    this.isLarge = !this.isLarge;    
   }
 
   editProject(project,idx){

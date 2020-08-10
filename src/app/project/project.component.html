@@ -17,6 +17,9 @@
 
 <div class="modal" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" [ngClass]="{show:isModal == true}" *ngIf="isModal == true" >
     <div class="modal-dialog" role="document">
+        <div id="Loading" [ngClass]="{end:isPictureLoading == true}">
+            <img src="assets/img/loading.gif" />
+        </div>
       <div class="modal-content">
         <div class="modal-header">          
             {{projectList[select_project_idx].project_name}}
@@ -27,8 +30,8 @@
         <div class="modal-body">
 
             <div class="imgListTarget"  >
-                <div class="imgTarget"  (click)="changeImg(idx)" [ngClass]="{active:selectIdx == 0}" (click)="changeImg(0)"></div>
-                <div *ngIf="pictureList.length > 0 " style="display:inline-block;">
+                <div *ngIf="pictureList.length > 0 " style="display:inline-block;white-space: pre;overflow-x: auto;width: 100%;">
+                    <div class="imgTarget"  (click)="changeImg(idx)" [ngClass]="{active:selectIdx == 0}" (click)="changeImg(0)"></div>
                     <div class="imgTarget" *ngFor="let picture of pictureList;let idx = index;" [ngClass]="{active:selectIdx == idx+1}" (click)="changeImg(idx+1)"></div>
                 </div>
                 
@@ -53,7 +56,7 @@
  </div>
 <div *ngIf="isEdit == true">  
   <div class="project_admin_content_section">
-      <h3> &nbsp; project 수정 &nbsp; <img src="assets/img/plusIcon.png" class="plusIcon" (click)="addproject()" /></h3>
+      <h3> &nbsp; project 수정 &nbsp; </h3>
       
       <div class="project_section" >
           <div *ngFor = "let project of changeInfo;let idx = index;">              
@@ -168,8 +171,9 @@
                </div>
                 <hr />                             
         </div>
-                              
+        
     </div>
+    <img src="assets/img/plusIcon.png" class="plusIcon" (click)="addproject()" />               
   </div>
 
   
