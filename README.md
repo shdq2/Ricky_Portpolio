@@ -2,19 +2,19 @@
 
 http://13.209.66.192:3000/#/main/shdq
 
-#Server
+# Server
 
 AWS EC2
 
-#DataBase
+# DataBase
 
 MySql 5.7.31
 
-#Front-End 
+# Front-End 
 
 Angular/cli 10.0.3
 
-#Back-End
+# Back-End
 
 node.js 12.18.2
 
